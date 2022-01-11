@@ -1,0 +1,14 @@
+<%- include('partials/header') -%>
+
+    <ul class="list-group">
+        <% for(let i=0; i <=file_list.length-1; i++ ){ %>
+            <br>
+            <li class="list-group-item">
+                <a href="/view/<%= file_list[i] %>">
+                    <%= file_list[i] %>
+                </a>
+            </li>
+            <% } %>
+    </ul>
+
+    <%- include('partials/footer') -%>

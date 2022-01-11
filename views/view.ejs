@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Map</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script>
+        function initMap() {
+            let input_string = "<%= data %>";
+            input_string = input_string.replaceAll(",", "_");
+            input_string = input_string.replaceAll("|", ",");
+            input_string = input_string.replaceAll("_", "|");
+            let first_set = input_string.substr(0, input_string.indexOf("|"));
+            first_set = first_set.split(",");
+
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 10,
+                /* center: { lat: 45.1638, lng: 14.2229 }, */
+                center: new google.maps.LatLng(first_set[0], first_set[1]),
+                mapTypeId: "terrain",
+            });
+
+            var coordinates = input_string.split("|");
+            var flightPlanCoordinates = new Array();
+            for (i = 0; i < coordinates.length; i++) {
+                var point = new google.maps.LatLng(coordinates[i].split(',')[0], coordinates[i].split(',')[1]);
+                flightPlanCoordinates.push(point);
+            }
+            const flightPath = new google.maps.Polyline({
+                path: flightPlanCoordinates,
+                geodesic: true,
+                strokeColor: "#9d03fc",
+                strokeOpacity: 0.8,
+                strokeWeight: 3,
+            });
+
+            flightPath.setMap(map);
+        }
+    </script>
+</head>
+
+<body>
+
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+        #map {
+            height: 100%;
+        }
+
+        /* Optional: Makes the sample page fill the window. */
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+
+    <div id="map"></div>
+
+    <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7YQhOm59Gu27sTwldtztMFaQCdUditXc&callback=initMap&v=weekly"
+        async></script>
+</body>
+
+</html>

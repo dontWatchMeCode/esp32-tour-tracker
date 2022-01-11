@@ -1,0 +1,14 @@
+<%- include('partials/header') -%>
+
+    <h1>Upload</h1>
+
+    <form ref='uploadForm' id='uploadForm' action='http://localhost:3050/api/upload' method='post'
+        encType="multipart/form-data">
+        <div class="mb-3">
+            <label for="formFile" class="form-label">Default file input example</label>
+            <input name="file" class="form-control" type="file" id="formFile">
+        </div>
+        <input type='submit' class="btn btn-secondary" value='Upload!'>
+    </form>
+
+    <%- include('partials/footer') -%>
