@@ -2,28 +2,28 @@ const router = require('express').Router();
 const fileUpload = require('express-fileupload');
 const { requiresAuth } = require('express-openid-connect');
 
-router.get('/', function (req, res, next) {
+router.get('/', async (req, res, next) => {
     res.render('index', {
         title: 'Home',
         isAuthenticated: req.oidc.isAuthenticated()
     });
 });
 
-router.get('/profile', requiresAuth(), function (req, res, next) {
+router.get('/profile', requiresAuth(), async (req, res, next) => {
     res.render('profile', {
         title: 'Profile',
         userProfile: JSON.stringify(req.oidc.user, null, 2)
     });
 });
 
-router.get('/upload', requiresAuth(), function (req, res, next) {
+router.get('/upload', requiresAuth(), async (req, res, next) => {
     res.render('upload', {
         title: 'Upload',
         isAuthenticated: req.oidc.isAuthenticated()
     });
 });
 
-router.get('/files', requiresAuth(), function (req, res, next) {
+router.get('/files', requiresAuth(), async (req, res, next) => {
     let file_list = require('fs')
         .readdirSync('./uploads/');
     res.render('files', {
@@ -33,7 +33,7 @@ router.get('/files', requiresAuth(), function (req, res, next) {
     });
 });
 
-router.get('/view/:id', requiresAuth(), function (req, res, next) {
+router.get('/view/:id', requiresAuth(), async (req, res, next) => {
     let id = req.params.id;
     let data = require('fs').readFileSync('./uploads/' + id)
         .toString() // convert Buffer to string
@@ -49,7 +49,7 @@ router.get('/view/:id', requiresAuth(), function (req, res, next) {
 });
 
 router.use(fileUpload());
-router.post('/api/upload', function (req, res) {
+router.post('/api/upload', async (req, res) => {
     let file;
     let upload_path;
 
