@@ -35,6 +35,8 @@ app.use(function (req, res, next) {
     next();
 });
 
+app.use('/public', express.static('public'));
+
 app.use('/', router);
 
 // Catch 404 and forward to error handler
