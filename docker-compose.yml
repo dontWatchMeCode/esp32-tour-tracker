@@ -1,11 +1,27 @@
-version: "3"
+version: '3'
+
 services:
-  node:
-    image: "node:16"
-    working_dir: /app
-    volumes:
-      - ./:/app
-    ports:
-      - "80:3000"
+
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
     restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+    ports:
+      - 127.0.0.1:3306:3306
+
+  adminer:
+    image: adminer
+    restart: unless-stopped
+    ports:
+      - 127.0.0.1:3001:8080
+
+  node:
+    build: .
     command: npm start
+    restart: unless-stopped
+    volumes:
+      - .:/usr/app/
+    ports:
+      - 127.0.0.1:3050:3050
