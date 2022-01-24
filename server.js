@@ -55,11 +55,6 @@ app.use(function (err, req, res, next) {
     });
 });
 
-/* app.listen(port, () => {
+app.listen(port, () => {
     console.log(`Listening on ${config.baseURL}`);
-}); */
-
-http.createServer(app)
-    .listen(port, () => {
-        console.log(`Listening on ${config.baseURL}`);
-    });
+});
