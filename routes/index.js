@@ -2,6 +2,9 @@ const router = require('express').Router();
 const fileUpload = require('express-fileupload');
 const { requiresAuth } = require('express-openid-connect');
 
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
+
 router.get('/', async (req, res, next) => {
     res.render('index', {
         title: 'Home',
