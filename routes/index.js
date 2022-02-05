@@ -6,6 +6,16 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 router.get('/', async (req, res, next) => {
+    usr_key = req.oidc.user.sub;
+    const db = await prisma.user.upsert({
+        where: {
+            key: usr_key,
+        },
+        update: {},
+        create: {
+            key: usr_key,
+        },
+    })
     res.render('index', {
         title: 'Home',
         isAuthenticated: req.oidc.isAuthenticated()
