@@ -3,11 +3,23 @@
     <ul class="list-group">
         <% for(let i=0; i <=api_keys.length-1; i++ ){ %>
             <br>
-            <li class="list-group-item">
-                <%= api_keys[i] %>
-                    <button class="float-end text-danger del-key" id='index-<%= i %>'>
+            <li class="list-group-item border-0">
+
+                <div class="input-group">
+                    <input disabled type="text" class="form-control" value="<%= api_keys[i] %>">
+                    <!-- <button class="btn btn-outline-secondary" type="button">
+                        <i class="fas fa-save"></i>
+                    </button> -->
+                    <button class="btn btn-outline-secondary copy-key" type="button">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                    <button class="btn btn-outline-secondary del-key" type="button">
                         <i class="fas fa-trash"></i>
                     </button>
+                </div>
+
+                <!-- <%= api_keys[i] %> -->
+
             </li>
             <% } %>
     </ul>
@@ -43,6 +55,14 @@
             item.addEventListener('click', event => {
                 console.log("test" + index);
                 del(index);
+            })
+        })
+
+        document.querySelectorAll('.copy-key').forEach((item, index) => {
+            item.addEventListener('click', event => {
+                value = document.querySelectorAll('.input-group input')[index].value;
+                navigator.clipboard.writeText(value);
+                alert("Copied the text: " + value);
             })
         })
     </script>
