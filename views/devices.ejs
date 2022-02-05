@@ -1,0 +1,50 @@
+<%- include('partials/header') -%>
+
+    <ul class="list-group">
+        <% for(let i=0; i <=api_keys.length-1; i++ ){ %>
+            <br>
+            <li class="list-group-item">
+                <%= api_keys[i] %>
+                    <button class="float-end text-danger del-key" id='index-<%= i %>'>
+                        <i class="fas fa-trash"></i>
+                    </button>
+            </li>
+            <% } %>
+    </ul>
+
+    <br>
+
+    <button type="button" class="btn btn-primary" id='add-key'>Add</button>
+
+    <script>
+        const button = document.getElementById('add-key');
+        button.addEventListener('click', function (e) {
+            console.log('button was clicked');
+            fetch('/api/key/add', { method: 'POST' })
+                .then(function (response) {
+                    location.reload();
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        });
+
+        function del(arg) {
+            fetch('/api/key/del/' + arg, { method: 'POST' })
+                .then(function (response) {
+                    location.reload();
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
+
+        document.querySelectorAll('.del-key').forEach((item, index) => {
+            item.addEventListener('click', event => {
+                console.log("test" + index);
+                del(index);
+            })
+        })
+    </script>
+
+    <%- include('partials/footer') -%>

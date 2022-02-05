@@ -2,20 +2,10 @@ const router = require('express').Router();
 const fileUpload = require('express-fileupload');
 const { requiresAuth } = require('express-openid-connect');
 
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
+const db = require('./db');
 
 router.get('/', async (req, res, next) => {
-    usr_key = req.oidc.user.sub;
-    const db = await prisma.user.upsert({
-        where: {
-            key: usr_key,
-        },
-        update: {},
-        create: {
-            key: usr_key,
-        },
-    })
+    db.check_id(req.oidc.user.sub);
     res.render('index', {
         title: 'Home',
         isAuthenticated: req.oidc.isAuthenticated()
@@ -43,6 +33,16 @@ router.get('/files', requiresAuth(), async (req, res, next) => {
         title: 'Files',
         isAuthenticated: req.oidc.isAuthenticated(),
         file_list
+    });
+});
+
+router.get('/devices', requiresAuth(), async (req, res, next) => {
+    key_array = await db.get_apikey(req.oidc.user.sub);
+    
+    res.render('devices', {
+        title: 'Devices',
+        isAuthenticated: req.oidc.isAuthenticated(),
+        api_keys: key_array
     });
 });
 
@@ -81,6 +81,23 @@ router.post('/api/upload', async (req, res) => {
 
         res.status(200).send('File uploaded!');
     });
+});
+
+router.post('/api/key/add', async (req, res) => {
+    userid = await db.get_userid(req.oidc.user.sub);
+    
+    db.add_apikey(userid);
+
+    res.send('ok');
+});
+
+router.post('/api/key/del/:id', async (req, res) => {
+    let id = req.params.id;
+    key_to_delete = await db.get_apikey(req.oidc.user.sub);
+    
+    db.del_apikey(key_to_delete[id]);
+
+    res.send('ok');
 });
 
 module.exports = router;
