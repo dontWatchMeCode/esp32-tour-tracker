@@ -38,13 +38,12 @@ router.get('/files', requiresAuth(), async (req, res, next) => {
 
 router.get('/devices', requiresAuth(), async (req, res, next) => {
     key_array = await db.get_apikey(req.oidc.user.sub);
-    name_array = await db.get_apiname(req.oidc.user.sub);
+    /* name_array = await db.get_apiname(req.oidc.user.sub); */
     
     res.render('devices', {
         title: 'Devices',
         isAuthenticated: req.oidc.isAuthenticated(),
-        api_keys: key_array,
-        api_names: name_array
+        api_keys: key_array
     });
 });
 
