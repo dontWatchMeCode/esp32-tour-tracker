@@ -12,7 +12,7 @@ function makekey(length) {
     return result;
 }
 
-exports.check_id = async (arg) => {
+exports.check_user = async (arg) => {
     const db = await prisma.user.upsert({
         where: {
             key: arg,
@@ -22,6 +22,18 @@ exports.check_id = async (arg) => {
             key: arg,
         },
     })
+
+    const db_usr = await prisma.user.findUnique({
+        where: {
+            key: arg
+        }
+    })
+
+    const fs = require('fs');
+    const dir = './uploads/' + db_usr.id;
+    if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+    }
 }
 
 exports.get_userid = async (arg) => {
@@ -40,7 +52,7 @@ exports.get_apikey = async (arg) => {
         },
         include: {
             api_keys: {
-                select: { key: true}
+                select: { key: true }
             }
         },
     })
@@ -58,7 +70,7 @@ exports.get_apiname = async (arg) => {
         },
         include: {
             api_keys: {
-                select: { name: true}
+                select: { name: true }
             }
         },
     })

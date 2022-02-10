@@ -5,7 +5,7 @@ const { requiresAuth } = require('express-openid-connect');
 const db = require('./db');
 
 router.get('/', async (req, res, next) => {
-    db.check_id(req.oidc.user.sub);
+    db.check_user(req.oidc.user.sub);
     res.render('index', {
         title: 'Home',
         isAuthenticated: req.oidc.isAuthenticated()
@@ -27,8 +27,9 @@ router.get('/upload', requiresAuth(), async (req, res, next) => {
 });
 
 router.get('/files', requiresAuth(), async (req, res, next) => {
+    userid = await db.get_userid(req.oidc.user.sub)
     let file_list = require('fs')
-        .readdirSync('./uploads/');
+        .readdirSync('./uploads/' + userid);
     res.render('files', {
         title: 'Files',
         isAuthenticated: req.oidc.isAuthenticated(),
@@ -39,7 +40,7 @@ router.get('/files', requiresAuth(), async (req, res, next) => {
 router.get('/devices', requiresAuth(), async (req, res, next) => {
     key_array = await db.get_apikey(req.oidc.user.sub);
     /* name_array = await db.get_apiname(req.oidc.user.sub); */
-    
+
     res.render('devices', {
         title: 'Devices',
         isAuthenticated: req.oidc.isAuthenticated(),
@@ -48,8 +49,9 @@ router.get('/devices', requiresAuth(), async (req, res, next) => {
 });
 
 router.get('/view/:id', requiresAuth(), async (req, res, next) => {
+    userid = await db.get_userid(req.oidc.user.sub)
     let id = req.params.id;
-    let data = require('fs').readFileSync('./uploads/' + id)
+    let data = require('fs').readFileSync('./uploads/' + userid + "/" + id)
         .toString() // convert Buffer to string
         .split('\n') // split string to lines
         .map(e => e.trim()) // remove white spaces for each line
@@ -86,7 +88,7 @@ router.post('/api/upload', async (req, res) => {
 
 router.post('/api/key/add', async (req, res) => {
     userid = await db.get_userid(req.oidc.user.sub);
-    
+
     db.add_apikey(userid);
 
     res.send('ok');
@@ -95,7 +97,7 @@ router.post('/api/key/add', async (req, res) => {
 router.post('/api/key/del/:id', async (req, res) => {
     let id = req.params.id;
     key_to_delete = await db.get_apikey(req.oidc.user.sub);
-    
+
     db.del_apikey(key_to_delete[id]);
 
     res.send('ok');
