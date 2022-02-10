@@ -69,13 +69,15 @@ router.post('/api/upload', async (req, res) => {
     let file;
     let upload_path;
 
+    userid = await db.get_userid(req.oidc.user.sub)
+
     if (!req.files || Object.keys(req.files).length === 0) {
         return res.status(400).send('No files were uploaded.');
     }
 
     // The name of the input field (i.e. "file") is used to retrieve the uploaded file
     file = req.files.file;
-    upload_path = __dirname + '/../uploads/' + file.name;
+    upload_path = __dirname + '/../uploads/' + userid + "/" + file.name;
 
     // Use the mv() method to place the file somewhere on your server
     file.mv(upload_path, function (err) {
