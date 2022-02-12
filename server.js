@@ -9,6 +9,7 @@ const { auth } = require('express-openid-connect');
 dotenv.load();
 
 const app = express();
+const api = express();
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -57,4 +58,14 @@ app.use(function (err, req, res, next) {
 
 app.listen(port, () => {
     console.log(`Listening on ${config.baseURL}`);
+});
+
+api.listen("3060", () => {
+    console.log(`Listening on ${config.baseURL}`);
+});
+
+api.get('/', function (req, res) {
+    res.json({
+        message: 'Hello from a public endpoint! You don\'t need to be authenticated to see this.'
+    });
 });
