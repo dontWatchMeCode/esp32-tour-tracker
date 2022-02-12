@@ -77,6 +77,10 @@ router.post('/api/upload', async (req, res) => {
 
     // The name of the input field (i.e. "file") is used to retrieve the uploaded file
     file = req.files.file;
+    api_key = req.body.key;
+
+    console.log(api_key);
+
     upload_path = __dirname + '/../uploads/' + userid + "/" + file.name;
 
     // Use the mv() method to place the file somewhere on your server
