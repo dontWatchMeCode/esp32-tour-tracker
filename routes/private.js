@@ -111,4 +111,15 @@ router.post('/api/key/del/:id', async (req, res) => {
     res.send('ok');
 });
 
+router.route('/apiv2')
+    .get(async (req, res) => {
+        res.send('ok_get');
+    })
+    .post(async (req, res) => {
+        res.send('ok_pos');
+    })
+    .delete(async (req, res) => {
+        res.send('ok_del');
+    });
+
 module.exports = router;
