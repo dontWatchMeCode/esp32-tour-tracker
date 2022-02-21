@@ -1,16 +1,7 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-function makekey(length) {
-    var result = '';
-    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    var charactersLength = characters.length;
-    for (var i = 0; i < length; i++) {
-        result += characters.charAt(Math.floor(Math.random() *
-            charactersLength));
-    }
-    return result;
-}
+const tools = require('./tools');
 
 exports.check_user = async (arg) => {
     try {
@@ -105,7 +96,7 @@ exports.add_apikey = async (arg) => {
         const db = await prisma.api_keys.create({
             data: {
                 userId: arg,
-                key: makekey(64)
+                key: tools.makekey(64)
             }
         })
     }
