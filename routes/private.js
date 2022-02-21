@@ -2,7 +2,9 @@ const router = require('express').Router();
 const fileUpload = require('express-fileupload');
 const { requiresAuth } = require('express-openid-connect');
 
-const db = require('./db');
+const db = require('./modules/db');
+
+/* private routes only avalible when logged in */
 
 router.get('/', async (req, res, next) => {
     db.check_user(req.oidc.user.sub);

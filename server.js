@@ -3,7 +3,8 @@ const express = require('express');
 const http = require('http');
 const logger = require('morgan');
 const path = require('path');
-const router = require('./routes/index');
+const router_private = require('./routes/private');
+const router_public = require('./routes/public');
 const { auth } = require('express-openid-connect');
 
 dotenv.load();
@@ -38,7 +39,7 @@ app.use(function (req, res, next) {
 
 app.use('/public', express.static('public'));
 
-app.use('/', router);
+app.use('/', router_private);
 
 // Catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -64,8 +65,4 @@ api.listen("3060", () => {
     console.log(`Listening on ${config.baseURL}`);
 });
 
-api.get('/', function (req, res) {
-    res.json({
-        message: 'Hello from a public endpoint! You don\'t need to be authenticated to see this.'
-    });
-});
+api.use('/', router_public);
