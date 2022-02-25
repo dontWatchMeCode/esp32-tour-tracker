@@ -40,7 +40,7 @@ router.get('/files', requiresAuth(), async (req, res, next) => {
 });
 
 router.get('/devices', requiresAuth(), async (req, res, next) => {
-    key_array = await db.get_apikey(req.oidc.user.sub);
+    key_array = await db.api_keys_get(req.oidc.user.sub);
     /* name_array = await db.get_apiname(req.oidc.user.sub); */
 
     res.render('devices', {
@@ -94,10 +94,10 @@ router.post('/api/upload', async (req, res) => {
     });
 });
 
-router.post('/api/key/add', async (req, res) => {
+/* router.post('/api/key/add', async (req, res) => {
     userid = await db.get_userid(req.oidc.user.sub);
 
-    db.add_apikey(userid);
+    db.api_keys_add(userid);
 
     res.send('ok');
 });
@@ -106,20 +106,55 @@ router.post('/api/key/del/:id', async (req, res) => {
     let id = req.params.id;
     key_to_delete = await db.get_apikey(req.oidc.user.sub);
 
-    db.del_apikey(key_to_delete[id]);
+    db.api_keys_delete(key_to_delete[id]);
 
     res.send('ok');
-});
+}); */
 
-router.route('/apiv2')
+router.route('/api/key')
     .get(async (req, res) => {
-        res.send('ok_get');
+        api_values = await db.api_keys_get(req.oidc.user.sub);
+        res.json(api_values);
     })
     .post(async (req, res) => {
-        res.send('ok_pos');
+        userid = await db.get_userid(req.oidc.user.sub);
+        db.api_keys_add(userid);
+        res.send('ok');
     })
     .delete(async (req, res) => {
-        res.send('ok_del');
+        let query_id = req.query.id;
+        let value;
+        api_values = await db.api_keys_get(req.oidc.user.sub);
+        try {
+            value = api_values[query_id][1];
+        } catch {
+            res.status(400);
+            res.send("id dosnt exist");
+            return;
+        }
+        db.api_keys_delete(value);
+        res.send('ok');
+    })
+    .patch(async (req, res) => {
+        let query_id = req.query.id;
+        let query_value = req.query.value;
+        let value;
+        api_values = await db.api_keys_get(req.oidc.user.sub);
+        try {
+            value = api_values[query_id][1];
+        } catch {
+            res.status(400);
+            res.send("id dosnt exist");
+            return;
+        }
+        db.api_keys_update(value, query_value)
+        res.send("change " + query_id + " to " + query_value);
     });
+
+router.route('/api/limittest')
+    .get(async (req, res) => {
+        api_values = await db.api_keys_get(req.oidc.user.sub);
+        res.json(api_values);
+    })
 
 module.exports = router;
