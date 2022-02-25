@@ -2,7 +2,10 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 // to update
-// npx prisma migrate dev --name "init" --preview-feature
+// npx prisma migrate dev
+
+// view
+// npx prisma studio
 
 generator client {
     provider = "prisma-client-js"
