@@ -151,10 +151,4 @@ router.route('/api/key')
         res.send("change " + query_id + " to " + query_value);
     });
 
-router.route('/api/limittest')
-    .get(async (req, res) => {
-        api_values = await db.api_keys_get(req.oidc.user.sub);
-        res.json(api_values);
-    })
-
 module.exports = router;
