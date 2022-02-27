@@ -5,7 +5,7 @@ const tools = require('./tools');
 
 exports.check_user = async (arg) => {
     try {
-        const db_user_upsert = await prisma.user.upsert({
+        await prisma.user.upsert({
             where: { key: arg, },
             update: {},
             create: { key: arg, },
@@ -24,7 +24,7 @@ exports.check_user = async (arg) => {
         }
     }
     catch (error) {
-        return error
+        return error;
     }
 }
 
@@ -50,14 +50,14 @@ exports.api_keys_get = async (arg) => {
                 }
             },
         })
-        key_array = [];
-        name_array = [];
+        let key_array = [];
+        let name_array = [];
         for (let i = 0; i < db_user.api_keys.length; i++) {
             key_array.push(db_user.api_keys[i].key);
             name_array.push(db_user.api_keys[i].name);
         }
 
-        combined_array = [], i = -1;
+        let combined_array = [], i = -1;
         while (key_array[++i]) {
             combined_array.push([name_array[i], key_array[i]]);
         }
@@ -65,13 +65,13 @@ exports.api_keys_get = async (arg) => {
         return combined_array;
     }
     catch (error) {
-        return error
+        return error;
     }
 }
 
 exports.api_keys_add = async (arg) => {
     try {
-        const db_apikeys = await prisma.api_keys.create({
+        await prisma.api_keys.create({
             data: {
                 userId: arg,
                 key: tools.makekey(64)
@@ -83,7 +83,7 @@ exports.api_keys_add = async (arg) => {
 
 exports.api_keys_delete = async (arg) => {
     try {
-        const db_apikeys = await prisma.api_keys.delete({
+        await prisma.api_keys.delete({
             where: { key: arg }
         })
     }
@@ -92,7 +92,7 @@ exports.api_keys_delete = async (arg) => {
 
 exports.api_keys_update = async (arg, value) => {
     try {
-        const db_apikeys = await prisma.api_keys.update({
+        await prisma.api_keys.update({
             where: { key: arg },
             data: { key: value },
         })

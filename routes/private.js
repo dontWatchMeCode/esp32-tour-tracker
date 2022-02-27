@@ -8,52 +8,52 @@ router.use(fileUpload());
 
 /* private routes only avalible when logged in */
 
-router.get('/', async (req, res, next) => {
+router.get('/', async (req, res) => {
     db.check_user(req.oidc.user.sub);
     res.render('index', {
         title: 'Home',
         isAuthenticated: req.oidc.isAuthenticated()
-    });
-});
+    })
+})
 
-router.get('/profile', requiresAuth(), async (req, res, next) => {
+router.get('/profile', requiresAuth(), async (req, res) => {
     res.render('profile', {
         title: 'Profile',
         userProfile: JSON.stringify(req.oidc.user, null, 2)
-    });
-});
+    })
+})
 
-router.get('/upload', requiresAuth(), async (req, res, next) => {
+router.get('/upload', requiresAuth(), async (req, res) => {
     res.render('upload', {
         title: 'Upload',
         isAuthenticated: req.oidc.isAuthenticated()
-    });
-});
+    })
+})
 
-router.get('/files', requiresAuth(), async (req, res, next) => {
-    userid = await db.get_userid(req.oidc.user.sub)
+router.get('/files', requiresAuth(), async (req, res) => {
+    const userid = await db.get_userid(req.oidc.user.sub)
     let file_list = require('fs')
         .readdirSync('./uploads/' + userid);
     res.render('files', {
         title: 'Files',
         isAuthenticated: req.oidc.isAuthenticated(),
         file_list
-    });
-});
+    })
+})
 
-router.get('/devices', requiresAuth(), async (req, res, next) => {
-    key_array = await db.api_keys_get(req.oidc.user.sub);
+router.get('/devices', requiresAuth(), async (req, res) => {
+    const key_array = await db.api_keys_get(req.oidc.user.sub);
     /* name_array = await db.get_apiname(req.oidc.user.sub); */
 
     res.render('devices', {
         title: 'Devices',
         isAuthenticated: req.oidc.isAuthenticated(),
         api_keys: key_array
-    });
-});
+    })
+})
 
-router.get('/view/:id', requiresAuth(), async (req, res, next) => {
-    userid = await db.get_userid(req.oidc.user.sub)
+router.get('/view/:id', requiresAuth(), async (req, res) => {
+    const userid = await db.get_userid(req.oidc.user.sub)
     let id = req.params.id;
     let data = require('fs').readFileSync('./uploads/' + userid + "/" + id)
         .toString() // convert Buffer to string
@@ -65,13 +65,13 @@ router.get('/view/:id', requiresAuth(), async (req, res, next) => {
         isAuthenticated: req.oidc.isAuthenticated(),
         id,
         data
-    });
-});
+    })
+})
 router.post('/api/upload', async (req, res) => {
     let file;
     let upload_path;
 
-    userid = await db.get_userid(req.oidc.user.sub)
+    const userid = await db.get_userid(req.oidc.user.sub)
 
     if (!req.files || Object.keys(req.files).length === 0) {
         return res.status(400).send('No files were uploaded.');
@@ -79,7 +79,7 @@ router.post('/api/upload', async (req, res) => {
 
     // The name of the input field (i.e. "file") is used to retrieve the uploaded file
     file = req.files.file;
-    api_key = req.body.key;
+    const api_key = req.body.key;
 
     console.log(api_key);
 
@@ -91,23 +91,23 @@ router.post('/api/upload', async (req, res) => {
             return res.status(500).send(err);
 
         res.status(200).send('File uploaded!');
-    });
-});
+    })
+})
 
 router.route('/api/key')
     .get(async (req, res) => {
-        api_values = await db.api_keys_get(req.oidc.user.sub);
+        const api_values = await db.api_keys_get(req.oidc.user.sub);
         res.json(api_values);
     })
     .post(async (req, res) => {
-        userid = await db.get_userid(req.oidc.user.sub);
+        const userid = await db.get_userid(req.oidc.user.sub);
         db.api_keys_add(userid);
         res.send('ok');
     })
     .delete(async (req, res) => {
         let query_id = req.query.id;
         let value;
-        api_values = await db.api_keys_get(req.oidc.user.sub);
+        const api_values = await db.api_keys_get(req.oidc.user.sub);
         try {
             value = api_values[query_id][1];
         } catch {
@@ -122,7 +122,7 @@ router.route('/api/key')
         let query_id = req.query.id;
         let query_value = req.query.value;
         let value;
-        api_values = await db.api_keys_get(req.oidc.user.sub);
+        const api_values = await db.api_keys_get(req.oidc.user.sub);
         try {
             value = api_values[query_id][1];
         } catch {
@@ -132,6 +132,6 @@ router.route('/api/key')
         }
         db.api_keys_update(value, query_value)
         res.send("change " + query_id + " to " + query_value);
-    });
+    })
 
 module.exports = router;
