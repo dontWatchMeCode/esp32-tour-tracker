@@ -2,6 +2,8 @@ const router = require('express').Router();
 const fileUpload = require('express-fileupload');
 const { requiresAuth } = require('express-openid-connect');
 
+const fs = require('fs');
+
 const db = require('./modules/database');
 
 router.use(fileUpload());
@@ -31,6 +33,7 @@ router.get('/upload', requiresAuth(), async (req, res) => {
 })
 
 router.get('/files', requiresAuth(), async (req, res) => {
+    await db.check_user(req.oidc.user.sub);
     const userid = await db.get_userid(req.oidc.user.sub)
     let file_list = require('fs')
         .readdirSync('./uploads/' + userid);
@@ -55,7 +58,7 @@ router.get('/devices', requiresAuth(), async (req, res) => {
 router.get('/view/:id', requiresAuth(), async (req, res) => {
     const userid = await db.get_userid(req.oidc.user.sub)
     let id = req.params.id;
-    let data = require('fs').readFileSync('./uploads/' + userid + "/" + id)
+    let data = fs.readFileSync('./uploads/' + userid + "/" + id)
         .toString() // convert Buffer to string
         .split('\n') // split string to lines
         .map(e => e.trim()) // remove white spaces for each line
