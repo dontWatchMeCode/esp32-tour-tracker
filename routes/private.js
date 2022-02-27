@@ -4,6 +4,8 @@ const { requiresAuth } = require('express-openid-connect');
 
 const db = require('./modules/database');
 
+router.use(fileUpload());
+
 /* private routes only avalible when logged in */
 
 router.get('/', async (req, res, next) => {
@@ -65,8 +67,6 @@ router.get('/view/:id', requiresAuth(), async (req, res, next) => {
         data
     });
 });
-
-router.use(fileUpload());
 router.post('/api/upload', async (req, res) => {
     let file;
     let upload_path;
@@ -93,23 +93,6 @@ router.post('/api/upload', async (req, res) => {
         res.status(200).send('File uploaded!');
     });
 });
-
-/* router.post('/api/key/add', async (req, res) => {
-    userid = await db.get_userid(req.oidc.user.sub);
-
-    db.api_keys_add(userid);
-
-    res.send('ok');
-});
-
-router.post('/api/key/del/:id', async (req, res) => {
-    let id = req.params.id;
-    key_to_delete = await db.get_apikey(req.oidc.user.sub);
-
-    db.api_keys_delete(key_to_delete[id]);
-
-    res.send('ok');
-}); */
 
 router.route('/api/key')
     .get(async (req, res) => {
