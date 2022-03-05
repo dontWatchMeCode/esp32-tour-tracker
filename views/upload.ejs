@@ -1,16 +1,26 @@
 <%- include('partials/header') -%>
 
-    <h1>Upload</h1>
+    <br>
 
     <form ref='uploadForm' id='uploadForm' action='http://localhost:3050/api/upload' method='post'
         encType="multipart/form-data">
-        <div class="mb-3">
-            <label for="formFile" class="form-label">Input File</label>
-            <input name="file" class="form-control" type="file" id="formFile">
-            <label for="formKey" class="form-label">API Key</label>
-            <input name="key" class="form-control" type="text" id="formKey">
+
+        <div class="card text-center w-25 mx-auto">
+            <div class="card-header">
+                <h5>
+                    Manuelles Hochladen
+                </h5>
+            </div>
+            <div class="card-body">
+                <label for="formFile" class="form-label">Bitte wählen sie eine gültige CSV-Datei aus.</label>
+                <input name="file" class="form-control" type="file" id="formFile">
+            </div>
+            <div class="card-footer text-muted">
+                Es wird kein API Key benötigt.
+            </div>
+            <input type='submit' class="btn btn-outline-dark" value='Hochladen'>
         </div>
-        <input type='submit' class="btn btn-secondary" value='Upload!'>
+
     </form>
 
     <%- include('partials/footer') -%>
