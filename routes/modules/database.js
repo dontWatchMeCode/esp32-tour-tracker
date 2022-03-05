@@ -94,7 +94,7 @@ exports.api_keys_update = async (arg, value) => {
     try {
         await prisma.api_keys.update({
             where: { key: arg },
-            data: { key: value },
+            data: { name: value },
         })
     }
     catch (error) { console.log(error); }

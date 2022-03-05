@@ -1,35 +1,131 @@
 <%- include('partials/header') -%>
 
-    <h1>Devices</h1>
+    <h1 class="text-center">Devices</h1>
 
-    <ul class="list-group">
-        <% for(let i=0; i <=api_keys.length-1; i++ ){ %>
-            <li class="list-group-item border-0">
+    <br>
 
-                <div class="input-group">
-                    <input disabled type="text" class="form-control" value="<%= api_keys[i][1] %>">
-                    <!-- <button class="btn btn-outline-secondary" type="button">
-                        <i class="fas fa-save"></i>
-                    </button> -->
-                    <button class="btn btn-outline-secondary copy-key" type="button">
-                        <i class="fas fa-copy"></i>
-                    </button>
-                    <button class="btn btn-outline-secondary del-key" type="button">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col" class="d-none d-xl-table-cell text-center">Key</th>
+                <th scope="col" class="d-none d-xl-table-cell text-center">Name</th>
+                <th scope="col" class="d-none d-xl-table-cell"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(let i=0; i <=api_keys.length-1; i++ ){ %>
+                <tr>
+                    <th scope="col" class="d-none d-xl-table-cell text-center api-key">
+                        <%= api_keys[i][1] %>
+                    </th>
+                    <th scope="col">
+                        <div class="input-group align-items-center justify-content-center flex-nowrap">
+                            <div class="form-outline float-start">
+                                <input type="text" class="form-control input-name">
+                            </div>
+                            <button type="button" class="btn btn-outline-dark d-table-cell d-xl-none copy-key">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                            <button type="button" class="btn btn-outline-dark d-table-cell d-xl-none del-key">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </th>
+                    <th class="d-none d-xl-table-cell">
+                        <button type="button" class="btn btn-outline-dark copy-key">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                        <button type="button" class="btn btn-outline-dark del-key">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </th>
+                </tr>
+                <% } %>
+        </tbody>
+    </table>
 
-                <!-- <%= api_keys[i] %> -->
-
-            </li>
-            <% } %>
-    </ul>
-
-    <button type="button" class="btn btn-primary mx-3 my-2a" id='add-key'>Add</button>
+    <button type="button" class="btn btn-outline-dark d-block mx-auto" id='add-key'>Add</button>
 
     <script>
-        const button = document.getElementById('add-key');
-        button.addEventListener('click', function (e) {
+
+        window.onload = init;
+        function init() {
+            // Clear forms here
+            console.log("init");
+
+            fetch('/api/key', { method: 'GET' })
+                .then(res => res.json())
+                .then(data => get_req = data)
+                .then(() => {
+                    console.log(get_req);
+                    document.querySelectorAll('.input-name').forEach((input, index) => {
+                        input.value = get_req[index][0];
+                    });
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+        }
+
+        function index_calc(arg) {
+            if (arg % 2 != 0) {
+                arg = (arg / 2) - 0.5;
+            } else {
+                arg = (arg / 2);
+            }
+
+            return arg;
+        }
+
+        document.querySelectorAll('.input-name').forEach((item, index) => {
+            item.addEventListener('blur', event => {
+                input_name = document.querySelectorAll('.input-name')[index].value;
+                fetch('/api/key?id=' + index + '&value=' + input_name, { method: 'PATCH' });
+            })
+        })
+
+        document.querySelectorAll('.patch-key').forEach((item, index) => {
+            item.addEventListener('click', event => {
+                input_name = document.querySelectorAll('.input-name')[index].value;
+                console.log("i" + index + "v" + input_name);
+                fetch('/api/key?id=' + index + '&value=' + input_name, { method: 'PATCH' })
+                    .then(function (response) {
+                        location.reload();
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            })
+        })
+
+        document.querySelectorAll('.patch-key').forEach((item, index) => {
+            item.addEventListener('click', event => {
+                input_name = document.querySelectorAll('.input-name')[index].value;
+                console.log("i" + index + "v" + input_name);
+                fetch('/api/key?id=' + index + '&value=' + input_name, { method: 'PATCH' })
+                    .then(function (response) {
+                        location.reload();
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            })
+        })
+
+        function test() {
+            document.querySelectorAll('.input-name').forEach((item, index) => {
+                input_name = document.querySelectorAll('.input-name')[index].value;
+                fetch('/api/key?id=' + index + '&value=' + input_name, { method: 'PATCH' })
+                    .then(function (response) {
+                        /* location.reload(); */
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            })
+        }
+
+        document.getElementById('add-key').addEventListener('click', function (e) {
             console.log('button was clicked');
             fetch('/api/key', { method: 'POST' })
                 .then(function (response) {
@@ -40,32 +136,28 @@
                 });
         });
 
-        function del(arg) {
-            fetch('/api/key?id=' + arg, { method: 'DELETE' })
-                .then(function (response) {
-                    location.reload();
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-        }
-
         document.querySelectorAll('.del-key').forEach((item, index) => {
             item.addEventListener('click', event => {
-                console.log("test" + index);
-                del(index);
+                console.log("test" + index_calc(index));
+                fetch('/api/key?id=' + (index_calc(index)), { method: 'DELETE' })
+                    .then(function (response) {
+                        location.reload();
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
             })
         })
 
         document.querySelectorAll('.copy-key').forEach((item, index) => {
             item.addEventListener('click', event => {
-                value = document.querySelectorAll('.input-group input')[index].value;
-                navigator.clipboard.writeText(value);
-                alert("Copied the text: " + value);
+                api_key = document.querySelectorAll('.api-key')[index_calc(index)].innerText.trim();
+                navigator.clipboard.writeText(api_key);
+                alert("Copied the text:\n\n" + api_key.substr(0, 40) + "...");
+                console.log(api_key);
             })
         })
-
-        let get_req;
+        /* let get_req;
         fetch('/api/key', { method: 'GET' })
             .then(res => res.json())
             .then(data => get_req = data)
@@ -74,7 +166,7 @@
             })
             .catch(function (error) {
                 console.log(error);
-            })
+            }) */
 
     </script>
 
