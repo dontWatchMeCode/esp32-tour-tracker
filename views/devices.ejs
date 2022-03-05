@@ -50,9 +50,6 @@
 
         window.onload = init;
         function init() {
-            // Clear forms here
-            console.log("init");
-
             fetch('/api/key', { method: 'GET' })
                 .then(res => res.json())
                 .then(data => get_req = data)
@@ -68,11 +65,8 @@
         }
 
         function index_calc(arg) {
-            if (arg % 2 != 0) {
-                arg = (arg / 2) - 0.5;
-            } else {
-                arg = (arg / 2);
-            }
+            if (arg % 2 != 0) { arg = (arg / 2) - 0.5; }
+            else { arg = (arg / 2); }
 
             return arg;
         }
@@ -87,7 +81,6 @@
         document.querySelectorAll('.patch-key').forEach((item, index) => {
             item.addEventListener('click', event => {
                 input_name = document.querySelectorAll('.input-name')[index].value;
-                console.log("i" + index + "v" + input_name);
                 fetch('/api/key?id=' + index + '&value=' + input_name, { method: 'PATCH' })
                     .then(function (response) {
                         location.reload();
@@ -101,7 +94,6 @@
         document.querySelectorAll('.patch-key').forEach((item, index) => {
             item.addEventListener('click', event => {
                 input_name = document.querySelectorAll('.input-name')[index].value;
-                console.log("i" + index + "v" + input_name);
                 fetch('/api/key?id=' + index + '&value=' + input_name, { method: 'PATCH' })
                     .then(function (response) {
                         location.reload();
@@ -125,8 +117,7 @@
             })
         }
 
-        document.getElementById('add-key').addEventListener('click', function (e) {
-            console.log('button was clicked');
+        document.getElementById('add-key').addEventListener('click', () => {
             fetch('/api/key', { method: 'POST' })
                 .then(function (response) {
                     location.reload();
@@ -138,7 +129,6 @@
 
         document.querySelectorAll('.del-key').forEach((item, index) => {
             item.addEventListener('click', event => {
-                console.log("test" + index_calc(index));
                 fetch('/api/key?id=' + (index_calc(index)), { method: 'DELETE' })
                     .then(function (response) {
                         location.reload();
@@ -154,20 +144,8 @@
                 api_key = document.querySelectorAll('.api-key')[index_calc(index)].innerText.trim();
                 navigator.clipboard.writeText(api_key);
                 alert("Copied the text:\n\n" + api_key.substr(0, 40) + "...");
-                console.log(api_key);
             })
         })
-        /* let get_req;
-        fetch('/api/key', { method: 'GET' })
-            .then(res => res.json())
-            .then(data => get_req = data)
-            .then(() => {
-                console.log(get_req);
-            })
-            .catch(function (error) {
-                console.log(error);
-            }) */
-
     </script>
 
 
