@@ -38,6 +38,23 @@
                     strokeWeight: 2,
                     map: map
                 });
+
+                console.log(data_array);
+            }
+
+            for (i = 1; i < data_array.length; i++) {
+                marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(data_array[i][8], data_array[i][9]),
+                    map: map,
+                    icon: {
+                        path: google.maps.SymbolPath.CIRCLE,
+                        fillColor: '#996699',
+                        fillOpacity: 0.5,
+                        strokeWeight: 0,
+                        scale: 7
+                    },
+                    title: 'kmh: ' + data_array[i][11] + '; alt: ' + data_array[i][10]
+                })
             }
         }
     </script>
