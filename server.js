@@ -1,6 +1,5 @@
 const dotenv = require('dotenv');
 const express = require('express');
-const http = require('http');
 const logger = require('morgan');
 const path = require('path');
 const router_private = require('./routes/private');
@@ -49,7 +48,7 @@ app.use(function (req, res, next) {
 });
 
 // Error handlers
-app.use(function (err, req, res, next) {
+app.use(function (err, req, res) {
     res.status(err.status || 500);
     res.render('error', {
         message: err.message,
