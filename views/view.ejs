@@ -4,39 +4,76 @@
 <head>
     <title>Map</title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
     <script>
         function initMap() {
-            let input_string = "<%= data %>";
-            input_string = input_string.replaceAll(",", "_");
-            input_string = input_string.replaceAll("|", ",");
-            input_string = input_string.replaceAll("_", "|");
-            let first_set = input_string.substr(0, input_string.indexOf("|"));
-            first_set = first_set.split(",");
+            let data_array = <%- JSON.stringify(data) %>;
 
             const map = new google.maps.Map(document.getElementById("map"), {
-                zoom: 10,
-                /* center: { lat: 45.1638, lng: 14.2229 }, */
-                center: new google.maps.LatLng(first_set[0], first_set[1]),
+                zoom: 3,
+                center: new google.maps.LatLng(data_array[1][8], data_array[1][9]),
                 mapTypeId: "terrain",
             });
 
-            var coordinates = input_string.split("|");
-            var flightPlanCoordinates = new Array();
-            for (i = 0; i < coordinates.length; i++) {
-                var point = new google.maps.LatLng(coordinates[i].split(',')[0], coordinates[i].split(',')[1]);
+            /* for (i = 1; i < data_array.length - 5; i++) {
+                let pos1 = new google.maps.LatLng(data_array[i][8], data_array[i][9]);
+                let pos2 = new google.maps.LatLng(data_array[i + 1][9], data_array[i + 1][9]);
+                console.log("---");
+                console.log(data_array[i][8] + " -:- " + data_array[i][9]);
+                console.log(data_array[i + 1][8] + " -:- " + data_array[i + 1][9]);
+
+                polyline = new google.maps.Polyline({
+                    path: [pos1, pos2],
+                    geodesic: true,
+                    strokeColor: "#9d03fc",
+                    strokeOpacity: 1.0,
+                    strokeWeight: 2,
+                    map: map
+                });
+            } */
+
+            for (i = 1; i < data_array.length - 1; i++) {
+                let pos1 = new google.maps.LatLng(data_array[i][8], data_array[i][9]);
+                let pos2 = new google.maps.LatLng(data_array[i + 1][8], data_array[i + 1][9]);
+
+                var check_speed = [10, 50, 100];
+                var current_speed = data_array[i][11];
+
+                color = (current_speed < check_speed[0])
+                    ? "#ff5733"
+                    : (current_speed < check_speed[1])
+                        ? "#ffb033"
+                        : (current_speed < check_speed[2])
+                            ? "#baff33"
+                            : "#33ffee";
+
+                polyline = new google.maps.Polyline({
+                    path: [pos1, pos2],
+                    geodesic: true,
+                    strokeColor: color,
+                    strokeOpacity: 1.0,
+                    strokeWeight: 2,
+                    map: map
+                });
+            }
+
+            /* var flightPlanCoordinates = new Array();
+            for (i = 1; i < data_array.length; i++) {
+                var point = new google.maps.LatLng(data_array[i][8], data_array[i][9]);
                 flightPlanCoordinates.push(point);
             }
-            const flightPath = new google.maps.Polyline({
+            const tourPath = new google.maps.Polyline({
                 path: flightPlanCoordinates,
                 geodesic: true,
                 strokeColor: "#9d03fc",
                 strokeOpacity: 0.8,
                 strokeWeight: 3,
-            });
+            }); */
 
-            flightPath.setMap(map);
+            /* tourPath.setMap(map); */
         }
     </script>
+
 </head>
 
 <body>
