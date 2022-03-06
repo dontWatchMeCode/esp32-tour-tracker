@@ -58,6 +58,7 @@ router.get('/devices', requiresAuth(), async (req, res) => {
 router.get('/view/:id', requiresAuth(), async (req, res) => {
     const userid = await db.get_userid(req.oidc.user.sub)
     let id = req.params.id;
+    // https://stackoverflow.com/a/53031629
     let data = fs.readFileSync('./uploads/' + userid + "/" + id)
         .toString() // convert Buffer to string
         .split('\n') // split string to lines
