@@ -15,23 +15,6 @@
                 mapTypeId: "terrain",
             });
 
-            /* for (i = 1; i < data_array.length - 5; i++) {
-                let pos1 = new google.maps.LatLng(data_array[i][8], data_array[i][9]);
-                let pos2 = new google.maps.LatLng(data_array[i + 1][9], data_array[i + 1][9]);
-                console.log("---");
-                console.log(data_array[i][8] + " -:- " + data_array[i][9]);
-                console.log(data_array[i + 1][8] + " -:- " + data_array[i + 1][9]);
-
-                polyline = new google.maps.Polyline({
-                    path: [pos1, pos2],
-                    geodesic: true,
-                    strokeColor: "#9d03fc",
-                    strokeOpacity: 1.0,
-                    strokeWeight: 2,
-                    map: map
-                });
-            } */
-
             for (i = 1; i < data_array.length - 1; i++) {
                 let pos1 = new google.maps.LatLng(data_array[i][8], data_array[i][9]);
                 let pos2 = new google.maps.LatLng(data_array[i + 1][8], data_array[i + 1][9]);
@@ -56,21 +39,6 @@
                     map: map
                 });
             }
-
-            /* var flightPlanCoordinates = new Array();
-            for (i = 1; i < data_array.length; i++) {
-                var point = new google.maps.LatLng(data_array[i][8], data_array[i][9]);
-                flightPlanCoordinates.push(point);
-            }
-            const tourPath = new google.maps.Polyline({
-                path: flightPlanCoordinates,
-                geodesic: true,
-                strokeColor: "#9d03fc",
-                strokeOpacity: 0.8,
-                strokeWeight: 3,
-            }); */
-
-            /* tourPath.setMap(map); */
         }
     </script>
 
@@ -79,13 +47,10 @@
 <body>
 
     <style>
-        /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
         #map {
             height: 100%;
         }
 
-        /* Optional: Makes the sample page fill the window. */
         html,
         body {
             height: 100%;
