@@ -74,7 +74,8 @@ exports.api_keys_add = async (arg) => {
         await prisma.api_keys.create({
             data: {
                 userId: arg,
-                key: tools.makekey(64)
+                key: tools.makekey(64),
+                name: "Tracker"
             }
         })
     }

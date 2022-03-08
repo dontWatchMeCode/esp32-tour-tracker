@@ -12,53 +12,18 @@
                 <th scope="col" class="d-none d-xl-table-cell"></th>
             </tr>
         </thead>
-        <tbody>
-            <% for(let i=0; i <=api_keys.length-1; i++ ){ %>
-                <tr>
-                    <th scope="col" class="d-none d-xl-table-cell text-center api-key">
-                        <%= api_keys[i][1] %>
-                    </th>
-                    <th scope="col">
-                        <div class="input-group align-items-center justify-content-center flex-nowrap">
-                            <div class="form-outline float-start">
-                                <input type="text" class="form-control input-name">
-                            </div>
-                            <button type="button" class="btn btn-outline-dark d-table-cell d-xl-none copy-key">
-                                <i class="fas fa-copy"></i>
-                            </button>
-                            <button type="button" class="btn btn-outline-dark d-table-cell d-xl-none del-key">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </th>
-                    <th class="d-none d-xl-table-cell">
-                        <button type="button" class="btn btn-outline-dark copy-key">
-                            <i class="fas fa-copy"></i>
-                        </button>
-                        <button type="button" class="btn btn-outline-dark del-key">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </th>
-                </tr>
-                <% } %>
-        </tbody>
-    </table>
-
-    <button type="button" class="btn btn-outline-dark d-block mx-auto" id='add-key'>Hinzufügen</button>
-    <br>
-    <button type="button" class="btn btn-outline-dark d-block mx-auto" onclick="update();">test</button>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col" class="d-xl-table-cell text-center">Key</th>
-                <th scope="col" class="d-xl-table-cell text-center">Name</th>
-                <th scope="col" class="d-xl-table-cell"></th>
-            </tr>
-        </thead>
         <tbody id="output_tbl">
         </tbody>
     </table>
+
+    <div class="d-flex justify-content-center">
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-outline-dark d-block mx-auto" id='add-key'>Hinzufügen</button>
+            <button type="button" class="btn btn-outline-dark d-block mx-auto" onclick="update();">
+                <i class="fas fa-sync-alt"></i>
+            </button>
+        </div>
+    </div>
 
     <script>
 
@@ -87,28 +52,10 @@
                     console.log(get_req);
                     get_req.forEach((data, index) => {
                         output
-                            += "<tr>"
-                            // key
-                            + "<th scope='col' class='d-none d-xl-table-cell text-center api-key'>"
-                            + data[1]
-                            + "</th>"
-                            //
-                            + "<th scope='col'>"
-                            + "<div class='input-group align-items-center justify-content-center flex-nowrap'>"
-                            + "<div class='form-outline float-start'>"
-                            + "<input type='text' class='form-control input-name' value='"
-                            + data[0]
-                            + "'>"
-                            + "</div>"
-                            + "<button type='button' class='btn btn-outline-dark d-table-cell copy-key'>"
-                            + "<i class='fas fa-copy'></i>"
-                            + "</button>"
-                            + "<button type='button' class='btn btn-outline-dark d-table-cell del-key'>"
-                            + "<i class='fas fa-trash'></i>"
-                            + "</button>"
-                            + "</tr>";
+                            += "<tr> <th scope='col' class='d-none d-xl-table-cell text-center api-key'>" + data[1] + "</th> <th scope='col'> <div class='input-group align-items-center justify-content-center flex-nowrap'> <div class='form-outline float-start'> <input type='text' class='form-control input-name placeholder-active' value=" + data[0] + "> <div class='form-notch'> <div class='form-notch-leading' style='width: 9px;'></div> <div class='form-notch-middle' style='width: 0px;'></div> <div class='form-notch-trailing'></div> </div> </div> <button type='button' class='btn btn-outline-dark d-table-cell d-xl-none copy-key'> <i class='fas fa-copy'></i> </button> <button type='button' class='btn btn-outline-dark d-table-cell d-xl-none del-key'> <i class='fas fa-trash'></i> </button> </div> </th> <th class='d-none d-xl-table-cell'> <button type='button' class='btn btn-outline-dark copy-key'> <i class='fas fa-copy'></i> </button> <button type='button' class='btn btn-outline-dark del-key'> <i class='fas fa-trash'></i> </button> </th></tr>";
                     });
                     container.innerHTML = output;
+                    listeners();
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -123,42 +70,47 @@
             return arg;
         }
 
-        document.querySelectorAll('.input-name').forEach((item, index) => {
-            item.addEventListener('blur', event => {
-                input_name = document.querySelectorAll('.input-name')[index].value;
-                fetch('/api/key?id=' + index + '&value=' + input_name, { method: 'PATCH' });
+        function listeners() {
+            document.querySelectorAll('.input-name').forEach((item, index) => {
+                item.addEventListener('blur', event => {
+                    input_name = document.querySelectorAll('.input-name')[index].value;
+                    fetch('/api/key?id=' + index + '&value=' + input_name, { method: 'PATCH' });
+                })
             })
-        })
+
+            document.querySelectorAll('.del-key').forEach((item, index) => {
+                item.addEventListener('click', event => {
+                    fetch('/api/key?id=' + (index_calc(index)), { method: 'DELETE' })
+                        .then(function (response) {
+                            /* location.reload(); */
+                            update();
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                })
+            })
+
+            document.querySelectorAll('.copy-key').forEach((item, index) => {
+                item.addEventListener('click', event => {
+                    api_key = document.querySelectorAll('.api-key')[index_calc(index)].innerText.trim();
+                    navigator.clipboard.writeText(api_key);
+                    alert("API key kopiert:\n\n" + api_key.substr(0, 40) + "...");
+                })
+            })
+        }
 
         document.getElementById('add-key').addEventListener('click', () => {
             fetch('/api/key', { method: 'POST' })
                 .then(function (response) {
-                    location.reload();
+                    /* location.reload(); */
+                    console.log("ran");
+                    update();
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
         });
-
-        document.querySelectorAll('.del-key').forEach((item, index) => {
-            item.addEventListener('click', event => {
-                fetch('/api/key?id=' + (index_calc(index)), { method: 'DELETE' })
-                    .then(function (response) {
-                        location.reload();
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
-            })
-        })
-
-        document.querySelectorAll('.copy-key').forEach((item, index) => {
-            item.addEventListener('click', event => {
-                api_key = document.querySelectorAll('.api-key')[index_calc(index)].innerText.trim();
-                navigator.clipboard.writeText(api_key);
-                alert("API key kopiert:\n\n" + api_key.substr(0, 40) + "...");
-            })
-        })
 
         /* testings */
 
