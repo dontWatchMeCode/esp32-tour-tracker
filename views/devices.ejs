@@ -45,6 +45,20 @@
     </table>
 
     <button type="button" class="btn btn-outline-dark d-block mx-auto" id='add-key'>Hinzufügen</button>
+    <br>
+    <button type="button" class="btn btn-outline-dark d-block mx-auto" onclick="update();">test</button>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col" class="d-xl-table-cell text-center">Key</th>
+                <th scope="col" class="d-xl-table-cell text-center">Name</th>
+                <th scope="col" class="d-xl-table-cell"></th>
+            </tr>
+        </thead>
+        <tbody id="output_tbl">
+        </tbody>
+    </table>
 
     <script>
 
@@ -54,15 +68,53 @@
                 .then(res => res.json())
                 .then(data => get_req = data)
                 .then(() => {
-                    console.log(get_req);
                     document.querySelectorAll('.input-name').forEach((input, index) => {
-                        input.value = get_req[index][0];
+                        //input.value = get_req[index][0];
                     });
                 })
                 .catch(function (error) {
                     console.log(error);
                 })
         }
+
+        function update() {
+            const container = document.getElementById('output_tbl');
+            let output = "";
+            fetch('/api/key', { method: 'GET' })
+                .then(res => res.json())
+                .then(data => get_req = data)
+                .then(() => {
+                    console.log(get_req);
+                    get_req.forEach((data, index) => {
+                        output
+                            += "<tr>"
+                            // key
+                            + "<th scope='col' class='d-none d-xl-table-cell text-center api-key'>"
+                            + data[1]
+                            + "</th>"
+                            //
+                            + "<th scope='col'>"
+                            + "<div class='input-group align-items-center justify-content-center flex-nowrap'>"
+                            + "<div class='form-outline float-start'>"
+                            + "<input type='text' class='form-control input-name' value='"
+                            + data[0]
+                            + "'>"
+                            + "</div>"
+                            + "<button type='button' class='btn btn-outline-dark d-table-cell copy-key'>"
+                            + "<i class='fas fa-copy'></i>"
+                            + "</button>"
+                            + "<button type='button' class='btn btn-outline-dark d-table-cell del-key'>"
+                            + "<i class='fas fa-trash'></i>"
+                            + "</button>"
+                            + "</tr>";
+                    });
+                    container.innerHTML = output;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+        }
+        update();
 
         function index_calc(arg) {
             if (arg % 2 != 0) { arg = (arg / 2) - 0.5; }
@@ -107,6 +159,9 @@
                 alert("API key kopiert:\n\n" + api_key.substr(0, 40) + "...");
             })
         })
+
+        /* testings */
+
     </script>
 
 
