@@ -21,6 +21,7 @@ model user {
     key      String?    @unique
     name     String?
     api_keys api_keys[]
+    tours    tours[]
 }
 
 model api_keys {
@@ -29,4 +30,12 @@ model api_keys {
     name   String?
     user   user?   @relation(fields: [userId], references: [id])
     userId Int?
+}
+
+model tours {
+    id       Int     @id @default(autoincrement())
+    name     String?
+    location String?
+    user     user?   @relation(fields: [userId], references: [id])
+    userId   Int?
 }
