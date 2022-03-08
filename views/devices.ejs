@@ -78,45 +78,6 @@
             })
         })
 
-        document.querySelectorAll('.patch-key').forEach((item, index) => {
-            item.addEventListener('click', event => {
-                input_name = document.querySelectorAll('.input-name')[index].value;
-                fetch('/api/key?id=' + index + '&value=' + input_name, { method: 'PATCH' })
-                    .then(function (response) {
-                        location.reload();
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
-            })
-        })
-
-        document.querySelectorAll('.patch-key').forEach((item, index) => {
-            item.addEventListener('click', event => {
-                input_name = document.querySelectorAll('.input-name')[index].value;
-                fetch('/api/key?id=' + index + '&value=' + input_name, { method: 'PATCH' })
-                    .then(function (response) {
-                        location.reload();
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
-            })
-        })
-
-        function test() {
-            document.querySelectorAll('.input-name').forEach((item, index) => {
-                input_name = document.querySelectorAll('.input-name')[index].value;
-                fetch('/api/key?id=' + index + '&value=' + input_name, { method: 'PATCH' })
-                    .then(function (response) {
-                        /* location.reload(); */
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
-            })
-        }
-
         document.getElementById('add-key').addEventListener('click', () => {
             fetch('/api/key', { method: 'POST' })
                 .then(function (response) {
