@@ -1,5 +1,7 @@
 <%- include('partials/header') -%>
 
+
+
     <h1 class="text-center">Geräte</h1>
 
     <br>
@@ -19,28 +21,13 @@
     <div class="d-flex justify-content-center">
         <div class="btn-group" role="group" aria-label="Basic example">
             <button type="button" class="btn btn-outline-dark d-block mx-auto" id='add-key'>Hinzufügen</button>
-            <button type="button" class="btn btn-outline-dark d-block mx-auto" onclick="update();">
+            <button type="button" class="btn btn-outline-dark d-block mx-auto" id='refresh-key'>
                 <i class="fas fa-sync-alt"></i>
             </button>
         </div>
     </div>
 
     <script>
-
-        window.onload = init;
-        function init() {
-            fetch('/api/key', { method: 'GET' })
-                .then(res => res.json())
-                .then(data => get_req = data)
-                .then(() => {
-                    document.querySelectorAll('.input-name').forEach((input, index) => {
-                        //input.value = get_req[index][0];
-                    });
-                })
-                .catch(function (error) {
-                    console.log(error);
-                })
-        }
 
         function update() {
             const container = document.getElementById('output_tbl');
@@ -56,6 +43,7 @@
                     });
                     container.innerHTML = output;
                     listeners();
+                    progress(0);
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -73,13 +61,16 @@
         function listeners() {
             document.querySelectorAll('.input-name').forEach((item, index) => {
                 item.addEventListener('blur', event => {
+                    progress(1);
                     input_name = document.querySelectorAll('.input-name')[index].value;
                     fetch('/api/key?id=' + index + '&value=' + input_name, { method: 'PATCH' });
+                    progress(0);
                 })
             })
 
             document.querySelectorAll('.del-key').forEach((item, index) => {
                 item.addEventListener('click', event => {
+                    progress(1);
                     fetch('/api/key?id=' + (index_calc(index)), { method: 'DELETE' })
                         .then(function (response) {
                             /* location.reload(); */
@@ -101,6 +92,7 @@
         }
 
         document.getElementById('add-key').addEventListener('click', () => {
+            progress(1);
             fetch('/api/key', { method: 'POST' })
                 .then(function (response) {
                     /* location.reload(); */
@@ -112,9 +104,147 @@
                 });
         });
 
+        document.getElementById('refresh-key').addEventListener('click', () => {
+            progress(1);
+            update();
+        });
+
+        function progress(status) {
+            if (status == 1) {
+                Loader.open();
+            } else {
+                Loader.close();
+            }
+        }
+
         /* loading feedback!!! */
 
     </script>
 
+    <script>
+        /* Loader */
+        /* https://www.cssscript.com/animated-svg-loading-spinner/ */
+        var Loader = {
+            loader: null,
+            body: null,
+            html: '<span><svg width="40" height="40" version="1.1" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="15"></svg></span>',
+            cssClass: 'loader',
+            check: function () {
+                if (this.body == null) {
+                    this.body = document.getElementsByTagName('body')[0];
+                }
+            },
+            open: function () {
+                this.check();
+                if (!this.isOpen()) {
+                    this.loader = document.createElement('div');
+                    this.loader.setAttribute('id', 'loader');
+                    this.loader.classList.add('loader_website');
+                    this.loader.innerHTML = this.html;
+                    this.body.append(this.loader);
+                    this.body.classList.add(this.cssClass);
+                }
+                return this;
+            },
+            close: function () {
+                this.check();
+                if (this.isOpen()) {
+                    this.body.classList.remove(this.cssClass);
+                    this.loader.remove();
+                }
+                return this;
+            },
+            isOpen: function () {
+                this.check();
+                return this.body.classList.contains(this.cssClass);
+            },
+            ifOpened: function (callback, close) {
+                this.check();
+                if (this.isOpen()) {
+                    if (!!close)
+                        this.close();
+                    if (typeof callback === 'function') {
+                        callback();
+                    }
+                }
+                return this;
+            },
+            ifClosed: function (callback, open) {
+                this.check();
+                if (!this.isOpen()) {
+                    if (!!open)
+                        this.open();
+                    if (typeof callback === 'function') {
+                        callback();
+                    }
+                }
+                return this;
+            }
+        };
+    /* Loader */
+    </script>
+
+    <style>
+        /*loader_website*/
+        .loader_website {
+            position: fixed;
+            top: 0;
+            left: 0px;
+            z-index: 1100;
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .loader_website>span {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+
+            display: block;
+            width: 48px;
+            height: 48px;
+            padding: 4px;
+
+            border-radius: 100%;
+
+            background-color: #262626;
+            box-shadow: rgba(0, 0, 0, 0.07) 0px 20px 25px -5px, rgba(0, 0, 0, 0.05) 0px 10px 10px -5px;
+        }
+
+        .loader_website>span>svg {
+            fill: transparent;
+            stroke: #fff;
+            stroke-width: 3;
+            animation: loader_dash 2s ease infinite, loader_rotate 2s linear infinite;
+        }
+
+        @keyframes loader_dash {
+            0% {
+                stroke-dasharray: 1, 95;
+                stroke-dashoffset: 0;
+            }
+
+            50% {
+                stroke-dasharray: 85, 95;
+                stroke-dashoffset: -25;
+            }
+
+            100% {
+                stroke-dasharray: 85, 95;
+                stroke-dashoffset: -93;
+            }
+        }
+
+        @keyframes loader_rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
 
     <%- include('partials/footer') -%>
