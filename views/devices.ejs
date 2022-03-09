@@ -1,7 +1,5 @@
 <%- include('partials/header') -%>
 
-
-
     <h1 class="text-center">Geräte</h1>
 
     <br>
@@ -73,7 +71,6 @@
                     progress(1);
                     fetch('/api/key?id=' + (index_calc(index)), { method: 'DELETE' })
                         .then(function (response) {
-                            /* location.reload(); */
                             update();
                         })
                         .catch(function (error) {
@@ -95,7 +92,6 @@
             progress(1);
             fetch('/api/key', { method: 'POST' })
                 .then(function (response) {
-                    /* location.reload(); */
                     console.log("ran");
                     update();
                 })
@@ -117,12 +113,9 @@
             }
         }
 
-        /* loading feedback!!! */
-
     </script>
 
     <script>
-        /* Loader */
         /* https://www.cssscript.com/animated-svg-loading-spinner/ */
         var Loader = {
             loader: null,
@@ -181,11 +174,9 @@
                 return this;
             }
         };
-    /* Loader */
     </script>
 
     <style>
-        /*loader_website*/
         .loader_website {
             position: fixed;
             top: 0;
