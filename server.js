@@ -36,7 +36,7 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.use('/public', express.static('public'));
+app.use('/public', express.static('source/public'));
 
 app.use('/', router_private);
 
