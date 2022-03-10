@@ -1,4 +1,13 @@
 if (window.location.href.indexOf("/devices") != -1) {
+
+    function init() {
+        update();
+    }
+
+    function timer() {
+        update();
+    }
+
     function update() {
         const container = document.getElementById('output_tbl');
         let output = "";
@@ -16,9 +25,8 @@ if (window.location.href.indexOf("/devices") != -1) {
             })
             .catch(function (error) {
                 console.log(error);
-            })
+            });
     }
-    update();
 
     function index_calc(arg) {
         if (arg % 2 != 0) { arg = (arg / 2) - 0.5; }
@@ -34,7 +42,7 @@ if (window.location.href.indexOf("/devices") != -1) {
                 navigator.clipboard.writeText(api_key);
                 alert("API key kopiert:\n\n" + api_key.substr(0, 40) + "...");
             })
-        })
+        });
 
         document.querySelectorAll('.input-name').forEach((item, index) => {
             item.addEventListener('blur', event => {
@@ -45,7 +53,7 @@ if (window.location.href.indexOf("/devices") != -1) {
                         progress(0);
                     });
             })
-        })
+        });
 
         document.querySelectorAll('.del-key').forEach((item, index) => {
             item.addEventListener('click', event => {
@@ -60,7 +68,7 @@ if (window.location.href.indexOf("/devices") != -1) {
                         });
                 }
             })
-        })
+        });
 
         document.querySelectorAll('.copy-key').forEach((item, index) => {
             item.addEventListener('click', event => {
@@ -68,7 +76,7 @@ if (window.location.href.indexOf("/devices") != -1) {
                 navigator.clipboard.writeText(api_key);
                 alert("API key kopiert:\n\n" + api_key.substr(0, 40) + "...");
             })
-        })
+        });
     }
 
     document.getElementById('add-key').addEventListener('click', () => {
@@ -97,4 +105,7 @@ if (window.location.href.indexOf("/devices") != -1) {
             loading_animation.off();
         }
     }
+
+    init();
+    setInterval(() => { timer() }, 30000);
 }
