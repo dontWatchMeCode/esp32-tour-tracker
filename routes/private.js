@@ -104,9 +104,8 @@ router.route('/api/key')
         res.json(api_values);
     })
     .post(async (req, res) => {
-        const userid = await db.get_userid(req.oidc.user.sub);
-        db.api_keys_add(userid);
-        res.send('ok');
+        db.api_keys_add(req.oidc.user.sub);
+        res.send('key created');
     })
     .delete(async (req, res) => {
         let query_id = req.query.id;
@@ -120,7 +119,7 @@ router.route('/api/key')
             return;
         }
         db.api_keys_delete(value);
-        res.send('ok');
+        res.send('deleted' + query_id);
     })
     .patch(async (req, res) => {
         let query_id = req.query.id;
