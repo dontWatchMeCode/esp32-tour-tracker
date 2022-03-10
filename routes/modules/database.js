@@ -3,7 +3,7 @@ const prisma = new PrismaClient();
 
 const tools = require('./tools');
 
-exports.check_user = async (arg) => {
+async function check_user(arg) {
     try {
         await prisma.user.upsert({
             where: { key: arg, },
@@ -28,7 +28,7 @@ exports.check_user = async (arg) => {
     }
 }
 
-exports.get_userid = async (arg) => {
+async function get_userid(arg) {
     try {
         const db_user = await prisma.user.findUnique({
             where: { key: arg }
@@ -40,7 +40,7 @@ exports.get_userid = async (arg) => {
     }
 }
 
-exports.api_keys_get = async (arg) => {
+async function api_keys_get(arg) {
     try {
         const db_user = await prisma.user.findUnique({
             where: { key: arg, },
@@ -69,11 +69,12 @@ exports.api_keys_get = async (arg) => {
     }
 }
 
-exports.api_keys_add = async (arg) => {
+async function api_keys_add(arg) {
+    const userid = await get_userid(arg);
     try {
         await prisma.api_keys.create({
             data: {
-                userId: arg,
+                userId: userid,
                 key: tools.makekey(64),
                 name: "Tracker"
             }
@@ -82,7 +83,7 @@ exports.api_keys_add = async (arg) => {
     catch (error) { console.log(error); }
 }
 
-exports.api_keys_delete = async (arg) => {
+async function api_keys_delete(arg) {
     try {
         await prisma.api_keys.delete({
             where: { key: arg }
@@ -91,7 +92,7 @@ exports.api_keys_delete = async (arg) => {
     catch (error) { console.log(error); }
 }
 
-exports.api_keys_update = async (arg, value) => {
+async function api_keys_update(arg, value) {
     try {
         await prisma.api_keys.update({
             where: { key: arg },
@@ -99,4 +100,13 @@ exports.api_keys_update = async (arg, value) => {
         })
     }
     catch (error) { console.log(error); }
+}
+
+module.exports = {
+    check_user,
+    get_userid,
+    api_keys_get,
+    api_keys_add,
+    api_keys_delete,
+    api_keys_update
 }
