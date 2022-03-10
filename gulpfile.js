@@ -24,10 +24,6 @@ gulp.task('min-css', function () {
         .pipe(gulp.dest('./source/public/'))
 });
 
-gulp.task('min-all', function () {
-
-});
-
 gulp.task('watch', function () {
     gulp.watch('./source/private/css/*.css', gulp.series('min-css'));
     gulp.watch('./source/private/js/*.js', gulp.series('min-js'));
