@@ -2,14 +2,6 @@
   min-width: 59px;
 }
 
-.api-key {
-  max-width: 350px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  cursor: pointer;
-  user-select: none;
-}
-
 #loading {
   width: 1.5rem;
   height: 1.5rem;
