@@ -29,7 +29,9 @@ function index_calc(arg) {
 function listeners() {
     document.querySelectorAll('.api-key').forEach((item, index) => {
         item.addEventListener('click', event => {
-            console.log("aaa");
+            api_key = document.querySelectorAll('.api-key')[index_calc(index)].innerText.trim();
+            navigator.clipboard.writeText(api_key);
+            alert("API key kopiert:\n\n" + api_key.substr(0, 40) + "...");
         })
     })
 
