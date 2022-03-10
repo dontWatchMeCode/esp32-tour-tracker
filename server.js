@@ -24,6 +24,7 @@ const config = {
 };
 
 const port = process.env.PORT || 3000;
+const port_api = (process.env.PORT+1) || 3001;
 if (!config.baseURL && !process.env.BASE_URL && process.env.PORT && process.env.NODE_ENV !== 'production') {
     config.baseURL = `http://localhost:${port}`;
 }
@@ -57,11 +58,11 @@ app.use(function (err, req, res) {
 });
 
 app.listen(port, () => {
-    console.log(`Listening on ${config.baseURL}`);
+    console.log(`FE on port ${port}`);
 });
 
-api.listen("3060", () => {
-    console.log(`Listening on ${config.baseURL}`);
+api.listen(port_api, () => {
+    console.log(`BE on port ${port_api}`);
 });
 
 api.use('/', router_public);

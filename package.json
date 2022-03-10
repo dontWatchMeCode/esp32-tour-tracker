@@ -3,8 +3,8 @@
     "main": "server.js",
     "scripts": {
         "start": "node server.js",
-        "dev:run": "nodemon & npx prisma studio",
-        "dev:db": "npx prisma migrate dev"
+        "dev": "nodemon & npx prisma studio -b BROWSER=none & gulp watch",
+        "db-push": "npx prisma migrate dev"
     },
     "dependencies": {
         "@prisma/client": "^3.8.1",
