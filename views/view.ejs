@@ -4,45 +4,50 @@
 <head>
     <title>Map</title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/2.4.2/chroma.min.js"
+        integrity="sha512-zInFF17qBFVvvvFpIfeBzo7Tj7+rQxLeTJDmbxjBz5/zIr89YVbTNelNhdTT+/DCrxoVzBeUPVFJsczKbB7sew=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="shortcut icon" href="http://localhost:3050/public/favicon.png" />
 
     <script>
         function initMap() {
             let data_array = <%- JSON.stringify(data) %>;
 
+            const f = chroma.scale(['blue', 'yellow', 'red']);
+
             const map = new google.maps.Map(document.getElementById("map"), {
-                zoom: 3,
+                zoom: 18,
                 center: new google.maps.LatLng(data_array[1][8], data_array[1][9]),
                 mapTypeId: "terrain",
             });
 
-            for (i = 1; i < data_array.length - 1; i++) {
+            let max = 0;
+
+            for (i = 1; i < data_array.length - 2; i++) {
+                if (max < data_array[i][11]) {
+                    max = data_array[i][11];
+                }
+            }
+
+            for (i = 1; i < data_array.length - 2; i++) {
                 let pos1 = new google.maps.LatLng(data_array[i][8], data_array[i][9]);
                 let pos2 = new google.maps.LatLng(data_array[i + 1][8], data_array[i + 1][9]);
 
                 var check_speed = [10, 50, 100];
                 var current_speed = data_array[i][11];
 
-                color = (current_speed < check_speed[0])
-                    ? "#ff5733"
-                    : (current_speed < check_speed[1])
-                        ? "#ffb033"
-                        : (current_speed < check_speed[2])
-                            ? "#baff33"
-                            : "#33ffee";
-
                 polyline = new google.maps.Polyline({
                     path: [pos1, pos2],
                     geodesic: true,
-                    strokeColor: color,
+                    strokeColor: f(current_speed / max).toString(),
                     strokeOpacity: 1.0,
                     strokeWeight: 2,
                     map: map
                 });
-
-                console.log(data_array);
             }
 
-            for (i = 1; i < data_array.length; i++) {
+            /* bad performence */
+            /* for (i = 1; i < data_array.length; i++) {
                 marker = new google.maps.Marker({
                     position: new google.maps.LatLng(data_array[i][8], data_array[i][9]),
                     map: map,
@@ -55,7 +60,7 @@
                     },
                     title: 'kmh: ' + data_array[i][11] + '; alt: ' + data_array[i][10]
                 })
-            }
+            } */
         }
     </script>
 
