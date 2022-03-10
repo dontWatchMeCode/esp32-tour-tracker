@@ -48,14 +48,16 @@ function listeners() {
 
     document.querySelectorAll('.del-key').forEach((item, index) => {
         item.addEventListener('click', event => {
-            progress(1);
-            fetch('/api/key?id=' + (index_calc(index)), { method: 'DELETE' })
-                .then(function (response) {
-                    update();
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
+            if (confirm("Sind sie sicher?")) {
+                progress(1);
+                fetch('/api/key?id=' + (index_calc(index)), { method: 'DELETE' })
+                    .then(function (response) {
+                        update();
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }
         })
     })
 
@@ -79,10 +81,10 @@ document.getElementById('add-key').addEventListener('click', () => {
         });
 });
 
-document.getElementById('refresh-key').addEventListener('click', () => {
+/* document.getElementById('refresh-key').addEventListener('click', () => {
     progress(1);
     update();
-});
+}); */
 
 function progress(status) {
     const container = document.getElementById("loading");
