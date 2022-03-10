@@ -5,7 +5,6 @@ function update() {
         .then(res => res.json())
         .then(data => get_req = data)
         .then(() => {
-            console.log(get_req);
             get_req.forEach((data, index) => {
                 output
                     += "<tr> <th scope='col' class='d-none d-xl-table-cell text-center api-key'>" + data[1] + "</th> <th scope='col'> <div class='input-group align-items-center justify-content-center flex-nowrap'> <div class='form-outline float-start'> <input type='text' class='form-control input-name placeholder-active' value=" + data[0] + "> <div class='form-notch'> <div class='form-notch-leading' style='width: 9px;'></div> <div class='form-notch-middle' style='width: 0px;'></div> <div class='form-notch-trailing'></div> </div> </div> <button type='button' class='btn btn-outline-dark d-table-cell d-xl-none copy-key'> <i class='fas fa-copy'></i> </button> <button type='button' class='btn btn-outline-dark d-table-cell d-xl-none del-key'> <i class='fas fa-trash'></i> </button> </div> </th> <th class='d-none d-xl-table-cell'> <button type='button' class='btn btn-outline-dark copy-key'> <i class='fas fa-copy'></i> </button> <button type='button' class='btn btn-outline-dark del-key'> <i class='fas fa-trash'></i> </button> </th></tr>";
@@ -28,12 +27,20 @@ function index_calc(arg) {
 }
 
 function listeners() {
+    document.querySelectorAll('.api-key').forEach((item, index) => {
+        item.addEventListener('click', event => {
+            console.log("aaa");
+        })
+    })
+
     document.querySelectorAll('.input-name').forEach((item, index) => {
         item.addEventListener('blur', event => {
             progress(1);
             input_name = document.querySelectorAll('.input-name')[index].value;
-            fetch('/api/key?id=' + index + '&value=' + input_name, { method: 'PATCH' });
-            progress(0);
+            fetch('/api/key?id=' + index + '&value=' + input_name, { method: 'PATCH' })
+                .then(function (response) {
+                    progress(0);
+                });
         })
     })
 
@@ -63,7 +70,6 @@ document.getElementById('add-key').addEventListener('click', () => {
     progress(1);
     fetch('/api/key', { method: 'POST' })
         .then(function (response) {
-            console.log("ran");
             update();
         })
         .catch(function (error) {
