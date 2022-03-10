@@ -85,9 +85,12 @@ document.getElementById('refresh-key').addEventListener('click', () => {
 });
 
 function progress(status) {
+    const container = document.getElementById("loading");
     if (status == 1) {
-        Loader.open();
+        click_block.open();
+        loading_animation.on();
     } else {
-        Loader.close();
+        click_block.close();
+        loading_animation.off();
     }
 }

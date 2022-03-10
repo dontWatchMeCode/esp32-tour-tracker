@@ -9,3 +9,25 @@
   cursor: pointer;
   user-select: none;
 }
+
+.navbar {
+}
+
+#loading {
+  width: 1.5rem;
+  height: 1.5rem;
+  position: absolute;
+  right: 16px;
+  opacity: 0;
+  transition: opacity 0.1s ease-in-out 0.1s;
+}
+
+#click_block {
+  position: fixed;
+  top: 0;
+  left: 0px;
+  z-index: 1100;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
