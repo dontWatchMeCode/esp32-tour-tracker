@@ -4,3 +4,7 @@
   overflow: hidden;
   user-select: none;
 }
+
+input[type="text"]:disabled {
+  background-color: transparent !important;
+}
