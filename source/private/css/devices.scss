@@ -1,8 +1,13 @@
-.api-key input {
-  max-width: 100%;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  user-select: none;
+.api-key {
+  input {
+    max-width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    user-select: none;
+  }
+  div {
+    cursor: pointer;
+  }
 }
 
 input[type="text"]:disabled {
