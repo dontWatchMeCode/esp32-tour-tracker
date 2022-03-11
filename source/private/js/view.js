@@ -47,46 +47,44 @@ function initMap() {
             title: 'kmh: ' + data_array[i][11] + '; alt: ' + data_array[i][10]
         })
     } */
-}
-
-const ctx = document.getElementById('myChart').getContext('2d');
-const myChart = new Chart(ctx, {
-    type: 'line',
-    responsive: true,
-    data: {
-        labels: [],
-        datasets: [{
-            label: 'Geschwindigkeit',
-            data: [],
-            borderWidth: 1,
-            borderColor: [
-                'rgba(153, 102, 255, 1)'
-            ],
-            pointStyle: 'line'
-        }],
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true,
-                suggestedMax: 50
-            }
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const myChart = new Chart(ctx, {
+        type: 'line',
+        responsive: true,
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Geschwindigkeit',
+                data: [],
+                borderWidth: 1,
+                borderColor: [
+                    'rgba(153, 102, 255, 1)'
+                ],
+                pointStyle: 'line'
+            }],
         },
-        elements: {
-            point: {
-                radius: 0
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    suggestedMax: 50
+                }
+            },
+            elements: {
+                point: {
+                    radius: 0
+                }
             }
         }
-    }
-});
-
-if (window.location.href.indexOf("/view") != -1) {
-    myChart.update();
-
-    myChart.options.scales.y.max = 20;
+    });
 
     for (let i = 1; i < data_array.length - 2; i++) {
         myChart.data.labels[i] = data_array[i][7].substring(0, 5);
         myChart.data.datasets[0].data[i] = data_array[i][11];
     }
+    myChart.update();
+    /*
+    max
+    myChart.options.scales.y.max = 20;
+    */
 }
