@@ -15,34 +15,34 @@ router.get('/', async (req, res) => {
     res.render('index', {
         title: 'Home',
         isAuthenticated: req.oidc.isAuthenticated()
-    })
-})
+    });
+});
 
 router.get('/profile', requiresAuth(), async (req, res) => {
     res.render('profile', {
         title: 'Profile',
         userProfile: JSON.stringify(req.oidc.user, null, 2)
-    })
-})
+    });
+});
 
 router.get('/upload', requiresAuth(), async (req, res) => {
     res.render('upload', {
         title: 'Upload',
         isAuthenticated: req.oidc.isAuthenticated()
-    })
-})
+    });
+});
 
 router.get('/files', requiresAuth(), async (req, res) => {
     await db.check_user(req.oidc.user.sub);
-    const userid = await db.get_userid(req.oidc.user.sub)
+    const userid = await db.get_userid(req.oidc.user.sub);
     let file_list = require('fs')
         .readdirSync('./uploads/' + userid);
     res.render('files', {
         title: 'Files',
         isAuthenticated: req.oidc.isAuthenticated(),
         file_list
-    })
-})
+    });
+});
 
 router.get('/devices', requiresAuth(), async (req, res) => {
     const key_array = await db.api_keys_get(req.oidc.user.sub);
@@ -52,11 +52,11 @@ router.get('/devices', requiresAuth(), async (req, res) => {
         title: 'Devices',
         isAuthenticated: req.oidc.isAuthenticated(),
         api_keys: key_array
-    })
-})
+    });
+});
 
 router.get('/view/:id', requiresAuth(), async (req, res) => {
-    const userid = await db.get_userid(req.oidc.user.sub)
+    const userid = await db.get_userid(req.oidc.user.sub);
     let id = req.params.id;
     // https://stackoverflow.com/a/53031629
     let data = fs.readFileSync('./uploads/' + userid + "/" + id)
@@ -69,13 +69,14 @@ router.get('/view/:id', requiresAuth(), async (req, res) => {
         isAuthenticated: req.oidc.isAuthenticated(),
         id,
         data
-    })
-})
+    });
+});
+
 router.post('/api/upload', async (req, res) => {
     let file;
     let upload_path;
 
-    const userid = await db.get_userid(req.oidc.user.sub)
+    const userid = await db.get_userid(req.oidc.user.sub);
 
     if (!req.files || Object.keys(req.files).length === 0) {
         return res.status(400).send('No files were uploaded.');
@@ -95,8 +96,8 @@ router.post('/api/upload', async (req, res) => {
             return res.status(500).send(err);
 
         res.status(200).send('File uploaded!');
-    })
-})
+    });
+});
 
 router.route('/api/key')
     .get(async (req, res) => {
@@ -133,8 +134,8 @@ router.route('/api/key')
             res.send("id dosnt exist");
             return;
         }
-        await db.api_keys_update(value, query_value)
+        await db.api_keys_update(value, query_value);
         res.send("change " + query_id + " to " + query_value);
-    })
+    });
 
 module.exports = router;

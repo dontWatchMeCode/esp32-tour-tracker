@@ -9,13 +9,13 @@ async function check_user(arg) {
             where: { key: arg, },
             update: {},
             create: { key: arg, },
-        })
+        });
 
         const db_user = await prisma.user.findUnique({
             where: {
                 key: arg
             }
-        })
+        });
 
         const fs = require('fs');
         const dir = './uploads/' + db_user.id;
@@ -32,11 +32,11 @@ async function get_userid(arg) {
     try {
         const db_user = await prisma.user.findUnique({
             where: { key: arg }
-        })
+        });
         return db_user.id;
     }
     catch (error) {
-        return error
+        return error;
     }
 }
 
@@ -49,7 +49,7 @@ async function api_keys_get(arg) {
                     select: { key: true, name: true }
                 }
             },
-        })
+        });
         let key_array = [];
         let name_array = [];
         for (let i = 0; i < db_user.api_keys.length; i++) {
@@ -78,7 +78,7 @@ async function api_keys_add(arg) {
                 key: tools.makekey(64),
                 name: "Tracker"
             }
-        })
+        });
     }
     catch (error) { console.log(error); }
 }
@@ -87,7 +87,7 @@ async function api_keys_delete(arg) {
     try {
         await prisma.api_keys.delete({
             where: { key: arg }
-        })
+        });
     }
     catch (error) { console.log(error); }
 }
@@ -97,7 +97,7 @@ async function api_keys_update(arg, value) {
         await prisma.api_keys.update({
             where: { key: arg },
             data: { name: value },
-        })
+        });
     }
     catch (error) { console.log(error); }
 }
@@ -109,4 +109,4 @@ module.exports = {
     api_keys_add,
     api_keys_delete,
     api_keys_update
-}
+};
