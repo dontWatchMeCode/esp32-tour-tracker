@@ -91,11 +91,6 @@ if (window.location.href.indexOf("/devices") != -1) {
             });
     });
 
-    /* document.getElementById('refresh-key').addEventListener('click', () => {
-        progress(1);
-        update();
-    }); */
-
     function progress(status) {
         const container = document.getElementById("loading");
         if (status == 1) {
