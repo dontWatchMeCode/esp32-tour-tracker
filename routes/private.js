@@ -104,7 +104,7 @@ router.route('/api/key')
         res.json(api_values);
     })
     .post(async (req, res) => {
-        db.api_keys_add(req.oidc.user.sub);
+        await db.api_keys_add(req.oidc.user.sub);
         res.send('key created');
     })
     .delete(async (req, res) => {
@@ -118,7 +118,7 @@ router.route('/api/key')
             res.send("id dosnt exist");
             return;
         }
-        db.api_keys_delete(value);
+        await db.api_keys_delete(value);
         res.send('deleted' + query_id);
     })
     .patch(async (req, res) => {
@@ -133,7 +133,7 @@ router.route('/api/key')
             res.send("id dosnt exist");
             return;
         }
-        db.api_keys_update(value, query_value)
+        await db.api_keys_update(value, query_value)
         res.send("change " + query_id + " to " + query_value);
     })
 

@@ -83,6 +83,8 @@ if (window.location.href.indexOf("/view") != -1) {
         }
     });
 
+    myChart.options.scales.y.max = 20;
+
     for (let i = 1; i < data_array.length - 2; i++) {
         myChart.data.labels[i] = data_array[i][7].substring(0, 5);
         myChart.data.datasets[0].data[i] = data_array[i][11];
