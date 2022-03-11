@@ -1,7 +1,6 @@
-.api-key {
-    max-width: 300px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    cursor: pointer;
-    user-select: none;
-  }
+.api-key input {
+  max-width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  user-select: none;
+}
