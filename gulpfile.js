@@ -15,6 +15,14 @@ gulp.task('min-js', function () {
         .pipe(gulp.dest('./source/public/'))
 });
 
+gulp.task('min-js-lib', function () {
+    return gulp.src('./source/private/js/lib/*.js')
+        .pipe(concat('script.js'))
+        .pipe(minifyJS())
+        .pipe(rename('script.lib.min.js'))
+        .pipe(gulp.dest('./source/public/'))
+});
+
 gulp.task('min-css', function () {
     return gulp.src('./source/private/css/*.css')
         .pipe(concat('script.css'))
@@ -24,7 +32,17 @@ gulp.task('min-css', function () {
         .pipe(gulp.dest('./source/public/'))
 });
 
+gulp.task('min-css-lib', function () {
+    return gulp.src('./source/private/css/lib/*.css')
+        .pipe(concat('script.css'))
+        .pipe(minifyCSS())
+        .pipe(rename('style.lib.min.css'))
+        .pipe(gulp.dest('./source/public/'))
+});
+
 gulp.task('watch', function () {
     gulp.watch('./source/private/css/*.css', gulp.series('min-css'));
+    gulp.watch('./source/private/css/lib/*.css', gulp.series('min-css-lib'));
     gulp.watch('./source/private/js/*.js', gulp.series('min-js'));
+    gulp.watch('./source/private/js/lib/*.js', gulp.series('min-js-lib'));
 });
