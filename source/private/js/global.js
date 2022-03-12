@@ -1,4 +1,8 @@
-/* https://www.cssscript.com/animated-svg-loading-spinner/ */
+/*
+
+* inspiration => https://www.cssscript.com/animated-svg-loading-spinner/
+
+*/
 
 const click_block = {
     container: null,

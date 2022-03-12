@@ -1,3 +1,13 @@
+/*
+
+* set max => infoChart.options.scales.y.max = 20;
+
+? multible axes
+TODO: better way to display forces
+TODO: mobile view
+
+*/
+
 function initMap() {
     const f = chroma.scale(['blue', 'yellow', 'red']);
 
@@ -211,12 +221,4 @@ function initMap() {
     infoChart.update();
     accChart.update();
     rotChart.update();
-    /*
-    max
-    infoChart.options.scales.y.max = 20;
-
-    ? multible axes
-    ! better way to display forces
-
-    */
 }
