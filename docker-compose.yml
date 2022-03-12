@@ -1,3 +1,8 @@
+# * is behind proxy => localhost
+#
+# ! not yet tested with new code
+# TODO: get port from .env
+
 version: '3'
 
 services:
