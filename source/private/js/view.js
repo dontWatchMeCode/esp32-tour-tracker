@@ -1,6 +1,14 @@
 /*
 
 * set max => infoChart.options.scales.y.max = 20;
+* colors for graphs
+    #003f5c
+    #58508d
+    #bc5090
+    #ff6361
+    #ffa600
+* color for map
+    fade => 'blue', 'yellow', 'red'
 
 ? multible axes
 TODO: better way to display forces
