@@ -19,7 +19,6 @@ datasource db {
 model user {
     id       Int        @id @default(autoincrement())
     key      String?    @unique
-    name     String?
     api_keys api_keys[]
     tours    tours[]
 }
