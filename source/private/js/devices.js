@@ -75,18 +75,18 @@ function listeners() {
             alert("API key kopiert:\n\n" + api_key.substr(0, 40) + "...");
         });
     });
-}
 
-document.getElementById('add-key').addEventListener('click', () => {
-    progress(1);
-    fetch('/api/key', { method: 'POST' })
-        .then(function (response) {
-            update();
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-});
+    document.getElementById('add-key').addEventListener('click', () => {
+        progress(1);
+        fetch('/api/key', { method: 'POST' })
+            .then(function (response) {
+                update();
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    });
+}
 
 function progress(status) {
     const container = document.getElementById("loading");
