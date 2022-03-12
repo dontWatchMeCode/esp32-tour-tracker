@@ -47,18 +47,36 @@ function initMap() {
             title: 'kmh: ' + data_array[i][11] + '; alt: ' + data_array[i][10]
         })
     } */
-    const ctx = document.getElementById('myChart').getContext('2d');
-    const myChart = new Chart(ctx, {
+    const ctx1 = document.getElementById('infoChart').getContext('2d');
+    const infoChart = new Chart(ctx1, {
         type: 'line',
         responsive: true,
         data: {
             labels: [],
             datasets: [{
-                label: 'Geschwindigkeit',
+                label: 'km/h',
                 data: [],
                 borderWidth: 1,
                 borderColor: [
-                    'rgba(153, 102, 255, 1)'
+                    '#58508d'
+                ],
+                pointStyle: 'line',
+            },
+            {
+                label: 'C',
+                data: [],
+                borderWidth: 1,
+                borderColor: [
+                    '#ff6361'
+                ],
+                pointStyle: 'line'
+            },
+            {
+                label: 'H',
+                data: [],
+                borderWidth: 1,
+                borderColor: [
+                    '#ffa600'
                 ],
                 pointStyle: 'line'
             }],
@@ -78,13 +96,127 @@ function initMap() {
         }
     });
 
+    const ctx2 = document.getElementById('accChart').getContext('2d');
+    const accChart = new Chart(ctx2, {
+        type: 'line',
+        responsive: true,
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'x',
+                data: [],
+                borderWidth: 1,
+                borderColor: [
+                    '#003f5c'
+                ],
+                pointStyle: 'line'
+            },
+            {
+                label: 'y',
+                data: [],
+                borderWidth: 1,
+                borderColor: [
+                    '#58508d'
+                ],
+                pointStyle: 'line'
+            },
+            {
+                label: 'z',
+                data: [],
+                borderWidth: 1,
+                borderColor: [
+                    '#bc5090'
+                ],
+                pointStyle: 'line'
+            }],
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            elements: {
+                point: {
+                    radius: 0
+                }
+            }
+        }
+    });
+
+    const ctx3 = document.getElementById('rotChart').getContext('2d');
+    const rotChart = new Chart(ctx3, {
+        type: 'line',
+        responsive: true,
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'x',
+                data: [],
+                borderWidth: 1,
+                borderColor: [
+                    '#003f5c'
+                ],
+                pointStyle: 'line'
+            },
+            {
+                label: 'y',
+                data: [],
+                borderWidth: 1,
+                borderColor: [
+                    '#58508d'
+                ],
+                pointStyle: 'line'
+            },
+            {
+                label: 'z',
+                data: [],
+                borderWidth: 1,
+                borderColor: [
+                    '#bc5090'
+                ],
+                pointStyle: 'line'
+            }],
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            elements: {
+                point: {
+                    radius: 0
+                }
+            }
+        }
+    });
+
     for (let i = 1; i < data_array.length - 2; i++) {
-        myChart.data.labels[i] = data_array[i][7].substring(0, 5);
-        myChart.data.datasets[0].data[i] = data_array[i][11];
+        infoChart.data.labels[i] = data_array[i][7].substring(0, 5);
+        infoChart.data.datasets[0].data[i] = data_array[i][11];
+        infoChart.data.datasets[1].data[i] = data_array[i][6];
+        infoChart.data.datasets[2].data[i] = data_array[i][10];
+
+        accChart.data.labels[i] = data_array[i][7].substring(0, 5);
+        accChart.data.datasets[0].data[i] = data_array[i][0];
+        accChart.data.datasets[1].data[i] = data_array[i][1];
+        accChart.data.datasets[2].data[i] = data_array[i][2];
+
+        rotChart.data.labels[i] = data_array[i][7].substring(0, 5);
+        rotChart.data.datasets[0].data[i] = data_array[i][3];
+        rotChart.data.datasets[1].data[i] = data_array[i][4];
+        rotChart.data.datasets[2].data[i] = data_array[i][5];
     }
-    myChart.update();
+    infoChart.update();
+    accChart.update();
+    rotChart.update();
     /*
     max
-    myChart.options.scales.y.max = 20;
+    infoChart.options.scales.y.max = 20;
+
+    ? multible axes
+    ! better way to display forces
+
     */
 }
