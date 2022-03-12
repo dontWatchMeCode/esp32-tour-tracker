@@ -13,7 +13,7 @@ gulp.task('min-js', function () {
         .pipe(concat('script.js'))
         .pipe(minifyJS())
         .pipe(rename('script.min.js'))
-        .pipe(gulp.dest('./source/public/'))
+        .pipe(gulp.dest('./source/public/'));
 });
 
 gulp.task('min-js-lib', function () {
@@ -21,7 +21,7 @@ gulp.task('min-js-lib', function () {
         .pipe(concat('script.js'))
         .pipe(minifyJS())
         .pipe(rename('script.lib.min.js'))
-        .pipe(gulp.dest('./source/public/'))
+        .pipe(gulp.dest('./source/public/'));
 });
 
 gulp.task('min-css', function () {
@@ -31,7 +31,7 @@ gulp.task('min-css', function () {
         .pipe(autoprefixerCSS())
         .pipe(minifyCSS({ compatibility: 'ie8' }))
         .pipe(rename('style.min.css'))
-        .pipe(gulp.dest('./source/public/'))
+        .pipe(gulp.dest('./source/public/'));
 });
 
 gulp.task('min-css-lib', function () {
@@ -39,7 +39,7 @@ gulp.task('min-css-lib', function () {
         .pipe(concat('script.css'))
         .pipe(minifyCSS())
         .pipe(rename('style.lib.min.css'))
-        .pipe(gulp.dest('./source/public/'))
+        .pipe(gulp.dest('./source/public/'));
 });
 
 gulp.task('watch', function () {
