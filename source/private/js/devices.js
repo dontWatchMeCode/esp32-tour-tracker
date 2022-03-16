@@ -73,16 +73,32 @@ function listeners_dv() {
 
     document.querySelectorAll('.del-key').forEach((item, index) => {
         item.addEventListener('click', event => {
-            if (confirm("Sind sie sicher?")) {
-                progress_dv(1);
-                fetch('/api/key?id=' + (index_calc_dv(index)), { method: 'DELETE' })
-                    .then(function (response) {
-                        update_dv();
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
-            }
+            Swal.fire({
+                title: 'Sind Sie sich sicher?',
+                text: "Sie können dies nicht rückgängig machen!",
+                icon: 'warning',
+                showCancelButton: true,
+                customClass: {
+                    confirmButton: 'btn btn-danger m-2',
+                    cancelButton: 'btn btn-outline-dark m-2'
+                },
+                buttonsStyling: false,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Abbrechen',
+                confirmButtonText: 'Löschen'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    progress_dv(1);
+                    fetch('/api/key?id=' + (index_calc_dv(index)), { method: 'DELETE' })
+                        .then(function (response) {
+                            update_dv();
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                }
+            });
         });
     });
 
@@ -90,7 +106,15 @@ function listeners_dv() {
         item.addEventListener('click', event => {
             api_key = document.querySelectorAll('.api-key input')[index_calc_dv(index)].value.trim();
             navigator.clipboard.writeText(api_key);
-            alert("API key kopiert:\n\n" + api_key.substr(0, 40) + "...");
+            Swal.fire({
+                title: 'API key kopiert:',
+                text: api_key.substr(0, 40) + "...",
+                icon: 'success',
+                customClass: {
+                    confirmButton: 'btn btn-outline-dark m-2'
+                },
+                buttonsStyling: false,
+            });
         });
     });
 }
