@@ -88,7 +88,7 @@ router.post('/api/upload', async (req, res) => {
 
     console.log(api_key);
 
-    upload_path = __dirname + '/../uploads/' + userid + "/" + file.name;
+    upload_path = __dirname + '/../uploads/' + userid + "/" + file.name + "-" + Date.now();
 
     // Use the mv() method to place the file somewhere on your server
     file.mv(upload_path, function (err) {
@@ -142,6 +142,10 @@ router.route('/api/tours')
     .get(async (req, res) => {
         const files = await db.files_get(req.oidc.user.sub);
         res.json(files);
+    })
+    .post(async (req, res) => {
+        const files = await db.files_check(req.oidc.user.sub);
+        res.send("yis");
     });
 
 module.exports = router;

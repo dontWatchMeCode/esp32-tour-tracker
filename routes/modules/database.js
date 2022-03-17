@@ -91,11 +91,38 @@ async function api_keys_update(arg, value) {
     catch (error) { console.log(error); }
 }
 
-async function files_get(arg, file) {
+async function files_get(arg) {
+    let out_tours;
     const userid = await get_userid(arg);
     let file_list = require('fs')
         .readdirSync('./uploads/' + userid);
 
+    const db_count = await prisma.user.findUnique({
+        where: { key: arg, },
+        include: {
+            tours: {
+                select: { file: true }
+            }
+        }
+    });
+    if (db_count.tours.length != file_list.length) {
+        // delete all records where file doasnt exist
+        for (let i = 0; i < db_count.tours.length; i++) {
+            if (!file_list.includes(db_count.tours[i].file)) {
+                await prisma.tours.delete({
+                    where: { file: db_count.tours[i].file }
+                });
+            }
+        }
+        // creat if not exist
+        for (let i = 0; i < file_list.length; i++) {
+            await prisma.tours.upsert({
+                where: { file: file_list[i], },
+                update: {},
+                create: { file: file_list[i], userId: userid },
+            });
+        }
+    }
     const db_user = await prisma.user.findUnique({
         where: { key: arg, },
         include: {
@@ -104,6 +131,7 @@ async function files_get(arg, file) {
             }
         },
     });
+
     return db_user.tours;
 }
 
