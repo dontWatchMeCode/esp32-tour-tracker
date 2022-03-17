@@ -35,8 +35,7 @@ router.get('/upload', requiresAuth(), async (req, res) => {
 router.get('/files', requiresAuth(), async (req, res) => {
     await db.check_user(req.oidc.user.sub);
     const userid = await db.get_userid(req.oidc.user.sub);
-    let file_list = require('fs')
-        .readdirSync('./uploads/' + userid);
+    let file_list = fs.readdirSync('./uploads/' + userid);
     res.render('files', {
         title: 'Files',
         isAuthenticated: req.oidc.isAuthenticated(),
@@ -143,9 +142,7 @@ router.route('/api/tours')
         const files = await db.files_get(req.oidc.user.sub);
         res.json(files);
     })
-    .post(async (req, res) => {
-        const files = await db.files_check(req.oidc.user.sub);
-        res.send("yis");
+    .delete(async (req, res) => {
     });
 
 module.exports = router;
