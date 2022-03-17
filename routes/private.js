@@ -143,6 +143,14 @@ router.route('/api/tours')
         res.json(files);
     })
     .delete(async (req, res) => {
+        /* TODO */
+    });
+
+router.route('/api/tours/info')
+    .get(async (req, res) => {
+        /* TODO */
+        const files = await db.file_get_info(req.oidc.user.sub, "data-10-3-2022.csv");
+        res.json(files);
     });
 
 module.exports = router;

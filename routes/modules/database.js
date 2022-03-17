@@ -1,5 +1,6 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
+const fs = require('fs');
 
 const tools = require('./tools');
 
@@ -16,7 +17,6 @@ async function check_user(arg) {
         }
     });
 
-    const fs = require('fs');
     const dir = './uploads/' + db_user.id;
     if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir, { recursive: true });
@@ -114,6 +114,35 @@ async function files_get(arg) {
     return db_user.tours;
 }
 
+
+async function file_get_info(arg, file) {
+    const userid = await get_userid(arg);
+    let tmp_max = 0;
+    let tmp_min = 0;
+    let tmp_avg;
+
+    let data = fs.readFileSync('./uploads/' + userid + "/" + file)
+        .toString() // convert Buffer to string
+        .split('\n') // split string to lines
+        .map(e => e.trim()) // remove white spaces for each line
+        .map(e => e.split(',').map(e => e.trim())); // split each line to array
+
+    for (i = 1; i < data.length; i++) {
+        if (tmp_max < data[i][11]) {
+            tmp_max = data[i][11];
+        }
+
+        if (tmp_min > data[i][11]) {
+            tmp_min = data[i][11];
+        }
+
+        tmp_avg = parseFloat(tmp_avg) + parseFloat(data[i][11]);
+    }
+
+    /* TODO */
+    return tmp_max + "-" + tmp_min + "-" + tmp_avg;
+}
+
 module.exports = {
     check_user,
     get_userid,
@@ -121,5 +150,6 @@ module.exports = {
     api_keys_add,
     api_keys_delete,
     api_keys_update,
-    files_get
+    files_get,
+    file_get_info
 };
