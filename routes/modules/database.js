@@ -102,11 +102,28 @@ async function api_keys_update(arg, value) {
     catch (error) { console.log(error); }
 }
 
+async function files_get(arg, file) {
+    const userid = await get_userid(arg);
+    let file_list = require('fs')
+        .readdirSync('./uploads/' + userid);
+
+    const db_user = await prisma.user.findUnique({
+        where: { key: arg, },
+        include: {
+            tours: {
+                select: { name: true, file: true }
+            }
+        },
+    });
+    return db_user.tours;
+}
+
 module.exports = {
     check_user,
     get_userid,
     api_keys_get,
     api_keys_add,
     api_keys_delete,
-    api_keys_update
+    api_keys_update,
+    files_get
 };

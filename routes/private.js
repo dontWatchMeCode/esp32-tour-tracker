@@ -138,4 +138,10 @@ router.route('/api/key')
         res.send("change " + query_id + " to " + query_value);
     });
 
+router.route('/api/tours')
+    .get(async (req, res) => {
+        const files = await db.files_get(req.oidc.user.sub);
+        res.json(files);
+    });
+
 module.exports = router;
