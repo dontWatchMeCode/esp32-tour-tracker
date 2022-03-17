@@ -21,6 +21,11 @@ async function check_user(arg) {
     if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir, { recursive: true });
     }
+
+    const dir_trash = './uploads/trash/' + db_user.id;
+    if (!fs.existsSync(dir_trash)) {
+        fs.mkdirSync(dir_trash, { recursive: true });
+    }
 }
 
 async function get_userid(arg) {
