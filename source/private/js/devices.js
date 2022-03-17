@@ -54,7 +54,15 @@ function listeners_dv() {
         api_key = document.querySelectorAll('.api-key input')[index_calc_dv(index)].value.trim();
         item.addEventListener('click', event => {
             navigator.clipboard.writeText(api_key);
-            alert("API key kopiert:\n\n" + api_key.substr(0, 40) + "...");
+            Swal.fire({
+                title: 'API key kopiert:',
+                text: api_key.substr(0, 40) + "...",
+                icon: 'success',
+                customClass: {
+                    confirmButton: 'btn btn-outline-dark m-2'
+                },
+                buttonsStyling: false,
+            });
         });
     });
 
