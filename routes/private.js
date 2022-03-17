@@ -113,7 +113,7 @@ router.route('/api/key')
         let value;
         const api_values = await db.api_keys_get(req.oidc.user.sub);
         try {
-            value = api_values[query_id][1];
+            value = api_values[query_id].key;
         } catch {
             res.status(400);
             res.send("id dosnt exist");
