@@ -34,7 +34,8 @@ model api_keys {
 model tours {
     id     Int     @id @default(autoincrement())
     name   String?
-    file   String? @unique
+    notes  String?
+    file   String  @unique
     user   user    @relation(fields: [userId], references: [id])
     userId Int
 }

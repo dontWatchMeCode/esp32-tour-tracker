@@ -79,7 +79,7 @@ async function files_get(arg) {
             where: { key: arg, },
             include: {
                 tours: {
-                    select: { name: true, file: true }
+                    select: { name: true, notes: true, file: true }
                 }
             }
         });
