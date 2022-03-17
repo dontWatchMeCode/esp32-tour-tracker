@@ -50,19 +50,8 @@ async function api_keys_get(arg) {
                 }
             },
         });
-        let key_array = [];
-        let name_array = [];
-        for (let i = 0; i < db_user.api_keys.length; i++) {
-            key_array.push(db_user.api_keys[i].key);
-            name_array.push(db_user.api_keys[i].name);
-        }
 
-        let combined_array = [], i = -1;
-        while (key_array[++i]) {
-            combined_array.push([name_array[i], key_array[i]]);
-        }
-
-        return combined_array;
+        return db_user.api_keys;
     }
     catch (error) {
         return error;
