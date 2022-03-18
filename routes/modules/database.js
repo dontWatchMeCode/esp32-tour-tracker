@@ -155,8 +155,8 @@ async function file_get_info(arg, file) {
         tmp_avg = parseFloat(tmp_avg) + parseFloat(data[i][6]);
     }
 
-    sp_avg = (sp_avg / data.length - 2).toFixed(2);
-    tmp_avg = (tmp_avg / data.length - 2).toFixed(2);
+    sp_avg = (sp_avg / (data.length - 2)).toFixed(2);
+    tmp_avg = (tmp_avg / (data.length - 2)).toFixed(2);
 
     output[0] = sp_max;
     output[1] = sp_min;

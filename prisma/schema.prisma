@@ -38,17 +38,4 @@ model tours {
     file       String       @unique
     user       user         @relation(fields: [userId], references: [id])
     userId     Int
-    tours_info tours_info[]
-}
-
-model tours_info {
-    id      Int     @id @default(autoincrement())
-    sp_max  String?
-    sp_min  String?
-    sp_avg  String?
-    tmp_max String?
-    tmp_min String?
-    tmp_avg String?
-    tours   tours?  @relation(fields: [toursId], references: [id])
-    toursId Int?
 }
