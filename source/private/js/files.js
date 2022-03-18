@@ -18,7 +18,7 @@ function update_fi() {
                             <button class="accordion-button collapsed flex-grow-1 accordion-btn text-dark" type="button" data-mdb-toggle="collapse"
                                 data-mdb-target="#collapse_` + index + `" aria-expanded="false" aria-controls="collapse_` + index + `"
                                 style="box-shadow: none;">
-                                ` + data.name + " <span class='ms-4 font-monospace'>" + data.file + "</span> " + `
+                                ` + data.name + " <span class='ms-4 font-monospace text-black-50'>[" + data.file + "]</span> " + `
                             </button>
 
                         </h2>
