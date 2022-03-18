@@ -131,8 +131,38 @@ function listeners_fi(data_array) {
 
     document.querySelectorAll('.rn-name-btn').forEach((item, index) => {
         item.addEventListener('click', event => {
-            console.log("rn-btn at: " + index);
-            /* close all accoridons */
+
+            /* close open accordion by simulating button click */
+            document.querySelectorAll('.accordion-btn').forEach((item) => {
+                if (!item.classList.contains("collapsed")) {
+                    item.click();
+                }
+            });
+
+            Swal.fire({
+                title: 'Namensänderung',
+                input: 'text',
+                inputLabel: 'Bitte geben sie ihren gewünschten Namen ein.',
+                showCancelButton: true,
+                customClass: {
+                    confirmButton: 'btn btn-danger m-2',
+                    cancelButton: 'btn btn-outline-dark m-2'
+                },
+                buttonsStyling: false,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Abbrechen',
+                confirmButtonText: 'Ändern',
+                inputValidator: (value) => {
+                    if (!value) {
+                        return 'Name kann nicht leer sein!';
+                    }
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    console.log(result.value);
+                }
+            });
         });
     });
 
@@ -142,7 +172,7 @@ function listeners_fi(data_array) {
 
         item.addEventListener('click', event => {
             if (speed_info_container[0].innerHTML == "-") {
-                /* progress_dv(1); */ /* shoulnd block => new version only loading symbol */
+                loading_animation.on();
                 fetch('/api/tours/info?file=' + data_array[index].file, { method: 'GET' })
                     .then(res => res.json())
                     .then(data => get_req = data)
@@ -154,7 +184,7 @@ function listeners_fi(data_array) {
                         temp_info_container.forEach((item, index) => {
                             item.innerHTML = get_req[index + 3];
                         });
-                        /* progress_dv(0); */
+                        loading_animation.off();
                     });
             }
         });
@@ -163,20 +193,21 @@ function listeners_fi(data_array) {
     document.querySelectorAll('.open-element-btn').forEach((item, index) => {
         item.addEventListener('click', event => {
             console.log("open at: " + index);
-            window.open(
-                "/view/" + data_array[index].file, "_blank");
+            window.open("/view/" + data_array[index].file, "_blank");
         });
     });
 
     document.querySelectorAll('.del-element-btn').forEach((item, index) => {
         item.addEventListener('click', event => {
             console.log("delete at: " + index);
+            /* TODO */
         });
     });
 
     document.querySelectorAll('.download-element-btn').forEach((item, index) => {
         item.addEventListener('click', event => {
             console.log("download at: " + index);
+            /* TODO */
         });
     });
 

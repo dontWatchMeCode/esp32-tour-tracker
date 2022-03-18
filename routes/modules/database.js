@@ -118,11 +118,11 @@ async function files_get(arg) {
 async function file_get_info(arg, file) {
     const userid = await get_userid(arg);
     let sp_max = 0;
-    let sp_min = 999;
+    let sp_min = 9999;
     let sp_avg = 0;
 
     let tmp_max = 0;
-    let tmp_min = 999;
+    let tmp_min = 9999;
     let tmp_avg = 0;
 
     let output = [];
