@@ -117,9 +117,15 @@ async function files_get(arg) {
 
 async function file_get_info(arg, file) {
     const userid = await get_userid(arg);
+    let sp_max = 0;
+    let sp_min = 999;
+    let sp_avg = 0;
+
     let tmp_max = 0;
-    let tmp_min = 0;
-    let tmp_avg;
+    let tmp_min = 999;
+    let tmp_avg = 0;
+
+    let output = [];
 
     let data = fs.readFileSync('./uploads/' + userid + "/" + file)
         .toString() // convert Buffer to string
@@ -127,20 +133,39 @@ async function file_get_info(arg, file) {
         .map(e => e.trim()) // remove white spaces for each line
         .map(e => e.split(',').map(e => e.trim())); // split each line to array
 
-    for (i = 1; i < data.length; i++) {
-        if (tmp_max < data[i][11]) {
-            tmp_max = data[i][11];
+    for (i = 1; i < data.length - 1; i++) {
+        if (sp_max < data[i][11]) {
+            sp_max = data[i][11];
         }
 
-        if (tmp_min > data[i][11]) {
-            tmp_min = data[i][11];
+        if (sp_min > data[i][11]) {
+            sp_min = data[i][11];
         }
 
-        tmp_avg = parseFloat(tmp_avg) + parseFloat(data[i][11]);
+        sp_avg = parseFloat(sp_avg) + parseFloat(data[i][11]);
+
+        if (tmp_max < data[i][6]) {
+            tmp_max = data[i][6];
+        }
+
+        if (tmp_min > data[i][6]) {
+            tmp_min = data[i][6];
+        }
+
+        tmp_avg = parseFloat(tmp_avg) + parseFloat(data[i][6]);
     }
 
-    /* TODO */
-    return tmp_max + "-" + tmp_min + "-" + tmp_avg;
+    sp_avg = (sp_avg / data.length - 2).toFixed(2);
+    tmp_avg = (tmp_avg / data.length - 2).toFixed(2);
+
+    output[0] = sp_max;
+    output[1] = sp_min;
+    output[2] = sp_avg;
+    output[3] = tmp_max;
+    output[4] = tmp_min;
+    output[5] = tmp_avg;
+
+    return output;
 }
 
 module.exports = {

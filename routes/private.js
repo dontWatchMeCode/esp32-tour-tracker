@@ -149,8 +149,15 @@ router.route('/api/tours')
 router.route('/api/tours/info')
     .get(async (req, res) => {
         /* TODO */
-        const files = await db.file_get_info(req.oidc.user.sub, "data-10-3-2022.csv");
-        res.json(files);
+        let query_file = req.query.file;
+        let info;
+        try {
+            info = await db.file_get_info(req.oidc.user.sub, query_file);
+        } catch {
+            res.status(400);
+            res.send("file doasnt exist");
+        }
+        res.json(info);
     });
 
 module.exports = router;
