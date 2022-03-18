@@ -134,30 +134,43 @@ router.route('/api/key')
             return;
         }
         await db.api_keys_update(value, query_value);
-        res.send("change " + query_id + " to " + query_value);
+        res.send("changed " + query_id + " to " + query_value);
     });
 
 router.route('/api/tours')
     .get(async (req, res) => {
+        if (req.query.file != undefined) {
+            let query_file = req.query.file;
+            let info;
+            try {
+                info = await db.file_get_info(req.oidc.user.sub, query_file);
+            } catch {
+                res.status(400);
+                res.send("file doasnt exist");
+            }
+            res.json(info);
+            return;
+        }
         const files = await db.files_get(req.oidc.user.sub);
         res.json(files);
     })
-    .delete(async (req, res) => {
-        /* TODO */
-    });
-
-router.route('/api/tours/info')
-    .get(async (req, res) => {
-        /* TODO */
-        let query_file = req.query.file;
-        let info;
+    .patch(async (req, res) => {
+        let query_value = req.query.value;
+        let query_id = req.query.id;
+        let value;
+        const tours_values = await db.files_get(req.oidc.user.sub);
         try {
-            info = await db.file_get_info(req.oidc.user.sub, query_file);
+            value = tours_values[query_id].file;
         } catch {
             res.status(400);
-            res.send("file doasnt exist");
+            res.send("id dosnt exist");
+            return;
         }
-        res.json(info);
+        await db.files_rename(req.oidc.user.sub, value, query_value);
+        res.send("changed " + query_id + " to " + query_value);
+    })
+    .delete(async (req, res) => {
+        /* TODO */
     });
 
 module.exports = router;

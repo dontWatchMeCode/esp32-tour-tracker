@@ -114,6 +114,15 @@ async function files_get(arg) {
     return db_user.tours;
 }
 
+async function files_rename(usr, file, value) {
+    const userid = await get_userid(usr);
+    await prisma.tours.update({
+        where: {
+            file: file
+        },
+        data: { name: value }
+    });
+}
 
 async function file_get_info(arg, file) {
     const userid = await get_userid(arg);
@@ -176,5 +185,6 @@ module.exports = {
     api_keys_delete,
     api_keys_update,
     files_get,
+    files_rename,
     file_get_info
 };

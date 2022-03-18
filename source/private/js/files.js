@@ -161,6 +161,13 @@ function listeners_fi(data_array) {
             }).then((result) => {
                 if (result.isConfirmed) {
                     console.log(result.value);
+                    fetch('/api/tours?id=' + index + "&value=" + result.value, { method: 'PATCH' })
+                        .then(function (response) {
+                            update_fi();
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
                 }
             });
         });
@@ -173,7 +180,7 @@ function listeners_fi(data_array) {
         item.addEventListener('click', event => {
             if (speed_info_container[0].innerHTML == "-") {
                 loading_animation.on();
-                fetch('/api/tours/info?file=' + data_array[index].file, { method: 'GET' })
+                fetch('/api/tours?file=' + data_array[index].file, { method: 'GET' })
                     .then(res => res.json())
                     .then(data => get_req = data)
                     .then(function (response) {
