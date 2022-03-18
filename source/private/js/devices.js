@@ -32,7 +32,39 @@ function update_dv() {
         .then(() => {
             console.log(get_req);
             get_req.forEach((data, index) => {
-                output += "<tr> <th scope='col' class='d-none d-xl-table-cell text-center api-key'> <div class='form-outline'> <input class='form-control active' type='text' value='" + data.key + "' aria-label='readonly api key' readonly='' disabled> <div style='position:absolute; left:0; right:0; top:0; bottom:0;'></div> <label class='form-label' style='margin-left: 0px;'>Readonly</label> <div class='form-notch'> <div class='form-notch-leading' style='width: 9px;'></div> <div class='form-notch-middle' style='width: 55px;'></div> <div class='form-notch-trailing'></div> </div> </div> </th> <th scope='col'> <div class='input-group align-items-center justify-content-center flex-nowrap'> <div class='form-outline float-start'> <input type='text' class='form-control input-name placeholder-active' value='" + data.name + "'> <div class='form-notch'> <div class='form-notch-leading' style='width: 9px;'></div> <div class='form-notch-middle' style='width: 0px;'></div> <div class='form-notch-trailing'></div> </div> </div> <button type='button' class='btn btn-outline-dark d-table-cell d-xl-none copy-key'> <i class='fas fa-copy'></i> </button> <button type='button' class='btn btn-outline-dark d-table-cell d-xl-none del-key'> <i class='fas fa-trash'></i> </button> </div> </th> <th class='d-none d-xl-table-cell'> <button type='button' class='btn btn-outline-dark copy-key'> <i class='fas fa-copy'></i> </button> <button type='button' class='btn btn-outline-dark del-key'> <i class='fas fa-trash'></i> </button> </th></tr>";
+                output +=
+                    `<tr>
+                    <th scope='col' class='d-none d-xl-table-cell text-center api-key'>
+                        <div class='form-outline'> <input class='form-control active' type='text' value='` + data.key + `'
+                                aria-label='readonly api key' readonly='' disabled>
+                            <div style='position:absolute; left:0; right:0; top:0; bottom:0;'></div> <label class='form-label'
+                                style='margin-left: 0px;'>Readonly</label>
+                            <div class='form-notch'>
+                                <div class='form-notch-leading' style='width: 9px;'></div>
+                                <div class='form-notch-middle' style='width: 55px;'></div>
+                                <div class='form-notch-trailing'></div>
+                            </div>
+                        </div>
+                    </th>
+                    <th scope='col'>
+                        <div class='input-group align-items-center justify-content-center flex-nowrap'>
+                            <div class='form-outline float-start'> <input type='text' class='form-control input-name placeholder-active'
+                                    value='` + data.name + `'>
+                                <div class='form-notch'>
+                                    <div class='form-notch-leading' style='width: 9px;'></div>
+                                    <div class='form-notch-middle' style='width: 0px;'></div>
+                                    <div class='form-notch-trailing'></div>
+                                </div>
+                            </div> <button type='button' class='btn btn-outline-dark d-table-cell d-xl-none copy-key'> <i
+                                    class='fas fa-copy'></i> </button> <button type='button'
+                                class='btn btn-outline-dark d-table-cell d-xl-none del-key'> <i class='fas fa-trash'></i> </button>
+                        </div>
+                    </th>
+                    <th class='d-none d-xl-table-cell'> <button type='button' class='btn btn-outline-dark copy-key'> <i
+                                class='fas fa-copy'></i> </button> <button type='button' class='btn btn-outline-dark del-key'> <i
+                                class='fas fa-trash'></i> </button> </th>
+                </tr>`
+                    ;
             });
             container.innerHTML = output;
             listeners_dv();
