@@ -63,8 +63,7 @@ function update_dv() {
                     <th class='d-none d-xl-table-cell'> <button type='button' class='btn btn-outline-dark copy-key'> <i
                                 class='fas fa-copy'></i> </button> <button type='button' class='btn btn-outline-dark del-key'> <i
                                 class='fas fa-trash'></i> </button> </th>
-                </tr>`
-                    ;
+                </tr>`;
             });
             container.innerHTML = output;
             listeners_dv();
