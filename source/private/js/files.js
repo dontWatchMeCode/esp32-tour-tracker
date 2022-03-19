@@ -1,3 +1,11 @@
+/*
+
+* _fi = files
+
+TODO: export / download button
+
+*/
+
 function update_fi() {
     const container = document.getElementById('accordionFiles');
     let output = "";
@@ -5,7 +13,6 @@ function update_fi() {
         .then(res => res.json())
         .then(data => get_req = data)
         .then(() => {
-            console.log(get_req);
             get_req.forEach((data, index) => {
                 output +=
                     `<div class="accordion-item">
@@ -77,8 +84,8 @@ function update_fi() {
 
                                         <div class="col-4">
                                             <div class="form-outline">
-                                                <textarea class="form-control active shadow-3" id="textArea_` + index + `" rows="5"
-                                                    style="resize: none;"> ` + data.notes + ` </textarea>
+                                                <textarea class="form-control textarea-notes active shadow-3" id="textArea_` + index + `" rows="5"
+                                                maxlength="100" style="resize: none;">` + data.notes + `</textarea>
                                                 <label class="form-label" for="textArea_` + index + `"
                                                     style="margin-left: 0px;">Notizen</label>
                                                 <div class="form-notch">
@@ -114,21 +121,14 @@ function update_fi() {
             });
             container.innerHTML = output;
             listeners_fi(get_req);
-            /* progress_dv(0); */
+            progress(0);
         })
         .catch(function (error) {
             console.log(error);
         });
 }
 
-/* TODO */
-
 function listeners_fi(data_array) {
-
-    console.log("ev li");
-
-    console.log(data_array);
-
     document.querySelectorAll('.rn-name-btn').forEach((item, index) => {
         item.addEventListener('click', event => {
 
@@ -160,8 +160,8 @@ function listeners_fi(data_array) {
                 }
             }).then((result) => {
                 if (result.isConfirmed) {
-                    console.log(result.value);
-                    fetch('/api/tours?id=' + index + "&value=" + result.value, { method: 'PATCH' })
+                    progress(1);
+                    fetch('/api/tours?id=' + index + "&name=" + result.value, { method: 'PATCH' })
                         .then(function (response) {
                             update_fi();
                         })
@@ -184,7 +184,6 @@ function listeners_fi(data_array) {
                     .then(res => res.json())
                     .then(data => get_req = data)
                     .then(function (response) {
-                        console.log("api req");
                         speed_info_container.forEach((item, index) => {
                             item.innerHTML = get_req[index];
                         });
@@ -199,15 +198,50 @@ function listeners_fi(data_array) {
 
     document.querySelectorAll('.open-element-btn').forEach((item, index) => {
         item.addEventListener('click', event => {
-            console.log("open at: " + index);
             window.open("/view/" + data_array[index].file, "_blank");
         });
     });
 
     document.querySelectorAll('.del-element-btn').forEach((item, index) => {
         item.addEventListener('click', event => {
-            console.log("delete at: " + index);
-            /* TODO */
+
+            Swal.fire({
+                title: 'Sind Sie sich sicher?',
+                text: "Sie können dies nicht rückgängig machen!",
+                icon: 'warning',
+                showCancelButton: true,
+                customClass: {
+                    confirmButton: 'btn btn-danger m-2',
+                    cancelButton: 'btn btn-outline-dark m-2'
+                },
+                buttonsStyling: false,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Abbrechen',
+                confirmButtonText: 'Löschen'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    progress(1);
+                    fetch('/api/tours?id=' + index, { method: 'DELETE' })
+                        .then(function (response) {
+                            update_fi();
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                }
+            });
+        });
+    });
+
+    document.querySelectorAll('.textarea-notes').forEach((item, index) => {
+        item.addEventListener('blur', event => {
+            fetch('/api/tours?id=' + index + "&notes=" + item.value.replace(/\n/g, "%0A"), { method: 'PATCH' })
+                .then(function (response) {
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
         });
     });
 

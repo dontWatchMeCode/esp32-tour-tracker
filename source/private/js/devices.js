@@ -8,7 +8,7 @@ function init_dv() {
     update_dv();
 
     document.getElementById('add-key').addEventListener('click', () => {
-        progress_dv(1);
+        progress(1);
         fetch('/api/key', { method: 'POST' })
             .then(function (response) {
                 update_dv();
@@ -30,7 +30,6 @@ function update_dv() {
         .then(res => res.json())
         .then(data => get_req = data)
         .then(() => {
-            console.log(get_req);
             get_req.forEach((data, index) => {
                 output +=
                     `<tr>
@@ -67,7 +66,7 @@ function update_dv() {
             });
             container.innerHTML = output;
             listeners_dv();
-            progress_dv(0);
+            progress(0);
         })
         .catch(function (error) {
             console.log(error);
@@ -100,11 +99,11 @@ function listeners_dv() {
 
     document.querySelectorAll('.input-name').forEach((item, index) => {
         item.addEventListener('blur', event => {
-            progress_dv(1);
+            progress(1);
             input_name = document.querySelectorAll('.input-name')[index].value;
             fetch('/api/key?id=' + index + '&value=' + input_name, { method: 'PATCH' })
                 .then(function (response) {
-                    progress_dv(0);
+                    progress(0);
                 });
         });
     });
@@ -127,7 +126,7 @@ function listeners_dv() {
                 confirmButtonText: 'Löschen'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    progress_dv(1);
+                    progress(1);
                     fetch('/api/key?id=' + (index_calc_dv(index)), { method: 'DELETE' })
                         .then(function (response) {
                             update_dv();
@@ -157,18 +156,7 @@ function listeners_dv() {
     });
 }
 
-function progress_dv(status) {
-    const container = document.getElementById("loading");
-    if (status == 1) {
-        click_block.open();
-        loading_animation.on();
-    } else {
-        click_block.close();
-        loading_animation.off();
-    }
-}
-
 if (window.location.href.indexOf("/devices") != -1) {
     init_dv();
-    setInterval(() => { timer_dv(); }, 30000);
+    /* setInterval(() => { timer_dv(); }, 30000); */
 }

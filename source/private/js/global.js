@@ -46,3 +46,13 @@ const loading_animation = {
         this.container.style.opacity = "0";
     }
 };
+
+function progress(status) {
+    if (status == 1) {
+        click_block.open();
+        loading_animation.on();
+    } else {
+        click_block.close();
+        loading_animation.off();
+    }
+}

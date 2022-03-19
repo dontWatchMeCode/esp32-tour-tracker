@@ -2,30 +2,29 @@
 
 * output_tbl gets populated by javascript
 
-TODO: new / custom popup dialog
-    ? https://mdbootstrap.com/docs/standard/components/modal/
-
  -->
 
 <%- include('partials/header') -%>
 
     <h1 class="text-center">Geräte</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col" class="d-none d-xl-table-cell text-center">Key</th>
-                <th scope="col" class="d-none d-xl-table-cell text-center">Name</th>
-                <th scope="col" class="d-none d-xl-table-cell"></th>
-            </tr>
-        </thead>
-        <tbody id="output_tbl">
-        </tbody>
-    </table>
+    <div class="page-container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col" class="d-none d-xl-table-cell text-center">Key</th>
+                    <th scope="col" class="d-none d-xl-table-cell text-center">Name</th>
+                    <th scope="col" class="d-none d-xl-table-cell"></th>
+                </tr>
+            </thead>
+            <tbody id="output_tbl">
+            </tbody>
+        </table>
 
-    <div class="d-flex justify-content-center">
-        <div class="btn-group" role="group" aria-label="Basic example">
-            <button type="button" class="btn btn-outline-dark d-block mx-auto" id='add-key'>Hinzufügen</button>
+        <div class="d-flex justify-content-center">
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-outline-dark d-block mx-auto" id='add-key'>Hinzufügen</button>
+            </div>
         </div>
     </div>
 

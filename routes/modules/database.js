@@ -6,9 +6,9 @@ const tools = require('./tools');
 
 async function check_user(arg) {
     await prisma.user.upsert({
-        where: { key: arg, },
+        where: { key: arg },
         update: {},
-        create: { key: arg, },
+        create: { key: arg },
     });
 
     const db_user = await prisma.user.findUnique({
@@ -37,7 +37,7 @@ async function get_userid(arg) {
 
 async function api_keys_get(arg) {
     const db_user = await prisma.user.findUnique({
-        where: { key: arg, },
+        where: { key: arg },
         include: {
             api_keys: {
                 select: { key: true, name: true }
@@ -103,9 +103,9 @@ async function files_get(arg) {
         // creat if not exist
         for (let i = 0; i < file_list.length; i++) {
             await prisma.tours.upsert({
-                where: { file: file_list[i], },
+                where: { file: file_list[i] },
                 update: {},
-                create: { file: file_list[i], userId: userid },
+                create: { file: file_list[i], userId: userid, name: "Name " + (i + 1), notes: "" },
             });
         }
         await get();
@@ -114,14 +114,25 @@ async function files_get(arg) {
     return db_user.tours;
 }
 
-async function files_rename(usr, file, value) {
-    const userid = await get_userid(usr);
+async function file_rename(file, value) {
     await prisma.tours.update({
-        where: {
-            file: file
-        },
+        where: { file: file },
         data: { name: value }
     });
+}
+
+async function file_change_notes(file, value) {
+    await prisma.tours.update({
+        where: { file: file },
+        data: { notes: value }
+    });
+}
+
+async function file_delete(usr, file) {
+    console.log(file);
+    const path = __dirname + '/../../uploads/' + usr + "/" + file;
+    const path_dest = __dirname + '/../../uploads/trash/' + usr + "/" + file;
+    fs.rename(path, path_dest, function (err) { });
 }
 
 async function file_get_info(arg, file) {
@@ -185,6 +196,8 @@ module.exports = {
     api_keys_delete,
     api_keys_update,
     files_get,
-    files_rename,
+    file_rename,
+    file_change_notes,
+    file_delete,
     file_get_info
 };
