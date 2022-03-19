@@ -4,7 +4,7 @@ const { requiresAuth } = require('express-openid-connect');
 
 const fs = require('fs');
 
-const db = require('./modules/database');
+const db = require('./modules/operations');
 
 router.use(fileUpload());
 
