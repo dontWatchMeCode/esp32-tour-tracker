@@ -7,6 +7,9 @@
 // view
 // npx prisma studio
 
+// delete migrations folder when encountering NULL bug
+// https://github.com/prisma/migrate/issues/498
+
 generator client {
     provider = "prisma-client-js"
 }
