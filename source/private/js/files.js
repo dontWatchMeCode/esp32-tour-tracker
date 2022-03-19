@@ -19,7 +19,7 @@ function update_fi() {
                         <h2 class="accordion-header d-flex justify-content-center align-items-center" id="heading_` + index + `">
 
                             <button type="button" class="btn btn-dark ms-3 p-1 rn-name-btn"
-                                style="min-width: 30px; max-height: 30px;">
+                                style="min-width: 25px; min-height: 25px;">
                                 <i class="fas fa-pen"></i>
                             </button>
                             <button class="accordion-button collapsed flex-grow-1 accordion-btn text-dark" type="button" data-mdb-toggle="collapse"
