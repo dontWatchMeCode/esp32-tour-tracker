@@ -25,7 +25,7 @@ function update_fi() {
                             <button class="accordion-button collapsed flex-grow-1 accordion-btn text-dark" type="button" data-mdb-toggle="collapse"
                                 data-mdb-target="#collapse_` + index + `" aria-expanded="false" aria-controls="collapse_` + index + `"
                                 style="box-shadow: none;">
-                                ` + data.name + " <span class='ms-4 font-monospace text-black-50'>[" + data.file + "]</span> " + `
+                                ` + data.name + " <span class='ms-4 font-monospace text-black-50 d-none d-md-inline'>[" + data.file + "]</span> " + `
                             </button>
 
                         </h2>
@@ -36,7 +36,7 @@ function update_fi() {
                                 <div class="container-fluid">
                                     <div class="row">
 
-                                        <div class="col-3">
+                                        <div class="col-md-3 col-6 pb-4 pb-md-0">
                                             <div class="card">
                                                 <div class="card-body p-3">
                                                     <h5 class="card-title text-center">°C</h5>
@@ -58,7 +58,7 @@ function update_fi() {
                                             </div>
                                         </div>
 
-                                        <div class="col-3">
+                                        <div class="col-md-3 col-6 pb-4 pb-md-0">
                                             <div class="card">
                                                 <div class="card-body p-3">
                                                     <h5 class="card-title text-center">Km/h</h5>
@@ -80,9 +80,9 @@ function update_fi() {
                                             </div>
                                         </div>
 
-                                        <div class="col-1"> </div>
+                                        <div class="col-md-1"> </div>
 
-                                        <div class="col-4">
+                                        <div class="col-md-4 pb-4 pb-md-0">
                                             <div class="form-outline">
                                                 <textarea class="form-control textarea-notes active shadow-3" id="textArea_` + index + `" rows="5"
                                                 maxlength="100" style="resize: none;">` + data.notes + `</textarea>
@@ -97,16 +97,16 @@ function update_fi() {
                                         </div>
 
 
-                                        <div class="col-1">
-                                            <button type="button" class="btn btn-dark mb-2 p-0 open-element-btn"
+                                        <div class="col-md-1">
+                                            <button type="button" class="btn btn-dark mb-2 p-0 open-element-btn float-md-none float-end ms-2 ms-md-0"
                                                 style="min-width: 30px; min-height: 40px;">
                                                 <i class="fas fa-external-link-alt"></i>
                                             </button>
-                                            <button type="button" class="btn btn-dark mb-2 p-0 del-element-btn"
+                                            <button type="button" class="btn btn-dark mb-2 p-0 del-element-btn float-md-none float-end ms-2 ms-md-0"
                                                 style="min-width: 30px; min-height: 40px;">
                                                 <i class="fas fa-trash"></i>
                                             </button>
-                                            <button type="button" class="btn btn-dark mb-2 p-0 download-element-btn"
+                                            <button type="button" class="btn btn-dark mb-2 p-0 download-element-btn float-md-none float-end ms-2 ms-md-0"
                                                 style="min-width: 30px; min-height: 40px;">
                                                 <i class="fas fa-download"></i>
                                             </button>
