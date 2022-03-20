@@ -158,5 +158,5 @@ function listeners_dv() {
 
 if (window.location.href.indexOf("/devices") != -1) {
     init_dv();
-    /* setInterval(() => { timer_dv(); }, 30000); */
+    setInterval(() => { timer_dv(); }, 30000);
 }
