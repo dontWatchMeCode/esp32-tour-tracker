@@ -248,9 +248,14 @@ function initMap() {
     document.querySelectorAll('.lb-open').forEach((open, index) => {
         const container = document.querySelectorAll('.lb-container')[index];
         const close = document.querySelectorAll('.lb-close')[index];
+        const tooltips = document.querySelectorAll('[data-mdb-toggle="tooltip"]');
         open.addEventListener('click', event => {
             container.style.visibility = 'visible';
             container.style.opacity = '1';
+            tooltips.forEach((tooltip) => {
+                const instance = mdb.Tooltip.getInstance(tooltip);
+                instance.hide();
+            });
         });
 
         close.addEventListener('click', event => {

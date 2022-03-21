@@ -19,20 +19,21 @@
   flex-wrap: wrap;
 }
 
-.lb-open {
+#lb-buttons {
   position: absolute;
-  top: 50vh;
+  top: 150px;
   left: 15px;
 }
 
 .lb-close{
     position: absolute;
     top: 15px;
-    right: 15px;
+    left: 15px;
 }
 
 .lb-container {
   position: absolute;
+  z-index: 999999;
   left: 0;
   top: 0;
   width: 100%;
