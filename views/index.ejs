@@ -1,12 +1,32 @@
 <%- include('partials/header') -%>
 
-    <h1>Übersicht
-    </h1>
+    <div class="page-container text-center shadow-0">
 
-    <% if (locals.isAuthenticated) { %>
-        <p>You are logged in.</p>
-        <% } else { %>
-            <p>You are not logged in. <a href="/login">Login</a>.</p>
-            <% } %>
+        <h1>Übersicht</h1>
 
-                <%- include('partials/footer') -%>
+        <% if (locals.isAuthenticated) { %>
+            <p>You are logged in.</p>
+            <% } else { %>
+                <p>You are not logged in. <a href="/login">Login</a>.</p>
+                <% } %>
+
+                    <a href="https://painzone.notion.site/Text-bc3a5cf25fa74edf92d0c843cf06fc5a" target="_blank">
+                        <button type="button" class="btn btn-dark">
+                            Notion Page
+                            <i class="fas fa-external-link-alt ms-2"></i>
+                        </button>
+                    </a>
+
+                    <br>
+                    <br>
+
+                    <a href="http://localhost:3050/public/data-10-3-2022.csv">
+                        <button type="button" class="btn btn-dark">
+                            Exmaple File
+                            <i class="fas fa-download ms-2"></i>
+                        </button>
+                    </a>
+
+    </div>
+
+    <%- include('partials/footer') -%>

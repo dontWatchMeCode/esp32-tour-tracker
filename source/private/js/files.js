@@ -106,7 +106,7 @@ function update_fi() {
                                                 style="min-width: 30px; min-height: 40px;">
                                                 <i class="fas fa-trash"></i>
                                             </button>
-                                            <button type="button" class="btn btn-dark mb-2 p-0 download-element-btn float-md-none float-end ms-2 ms-md-0"
+                                            <button disabled type="button" class="btn btn-dark mb-2 p-0 download-element-btn float-md-none float-end ms-2 ms-md-0"
                                                 style="min-width: 30px; min-height: 40px;">
                                                 <i class="fas fa-download"></i>
                                             </button>
