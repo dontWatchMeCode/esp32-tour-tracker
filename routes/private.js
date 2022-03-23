@@ -56,6 +56,7 @@ router.get('/devices', requiresAuth(), async (req, res) => {
 
 router.get('/view/:id', requiresAuth(), async (req, res) => {
     const userid = await db.get_userid(req.oidc.user.sub);
+    const gapi = process.env.GMAPS_API_KEY;
     let id = req.params.id;
     // https://stackoverflow.com/a/53031629
     let data = fs.readFileSync('./uploads/' + userid + "/" + id)
@@ -67,7 +68,8 @@ router.get('/view/:id', requiresAuth(), async (req, res) => {
         title: 'View',
         isAuthenticated: req.oidc.isAuthenticated(),
         id,
-        data
+        data,
+        gapi
     });
 });
 
