@@ -5,11 +5,12 @@
     overflow: hidden;
     user-select: none;
   }
+
   div {
     cursor: pointer;
   }
-}
 
-input[type="text"]:disabled {
-  background-color: transparent !important;
+  input[type="text"]:disabled {
+    background-color: transparent !important;
+  }
 }
