@@ -232,4 +232,44 @@ function initMap() {
     infoChart.update();
     accChart.update();
     rotChart.update();
+
+    /* document.getElementById("lb-open").addEventListener('click', () => {
+        var e = document.getElementById("lb-container");
+        if (e.style.visibility == 'visible') {
+            e.style.visibility = 'hidden';
+            e.style.opacity = '0';
+        }
+        else {
+            e.style.visibility = 'visible';
+            e.style.opacity = '1';
+        }
+    }); */
+
+    document.querySelectorAll('.lb-open').forEach((open, index) => {
+        const container = document.querySelectorAll('.lb-container')[index];
+        const close = document.querySelectorAll('.lb-close')[index];
+        const tooltips = document.querySelectorAll('[data-mdb-toggle="tooltip"]');
+        open.addEventListener('click', event => {
+            container.style.visibility = 'visible';
+            container.style.opacity = '1';
+            tooltips.forEach((tooltip) => {
+                const instance = mdb.Tooltip.getInstance(tooltip);
+                instance.hide();
+            });
+        });
+
+        close.addEventListener('click', event => {
+            container.style.visibility = 'hidden';
+            container.style.opacity = '0';
+        });
+    });
+
+    document.addEventListener('keydown', function (event) {
+        if (event.key === "Escape") {
+            document.querySelectorAll('.lb-container').forEach((item, index) => {
+                item.style.visibility = 'hidden';
+                item.style.opacity = '0';
+            });
+        }
+    });
 }

@@ -35,10 +35,36 @@
         <canvas id="rotChart"></canvas>
     </div>
 
-    <script>
+    <div id="lb-buttons" class="d-flex flex-column">
+        <button type="button" class="lb-open btn btn-danger btn-floating mb-2" data-mdb-toggle="tooltip"
+            data-mdb-placement="right" title="Kräfte / Tempo ...">
+            <i class="fas fa-expand-arrows-alt"></i>
+        </button>
+
+        <button type="button" class="lb-open btn btn-success btn-floating" data-mdb-toggle="tooltip"
+            data-mdb-placement="right" title="Temp. / Höhe ...">
+            <i class="fas fa-mountain"></i>
+        </button>
+    </div>
 
 
-    </script>
+    <div class="lb-container">
+        <button type="button" class="lb-close btn btn-dark btn-floating">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="lb-content">
+            1
+        </div>
+    </div>
+
+    <div class="lb-container">
+        <button type="button" class="lb-close btn btn-dark btn-floating">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="lb-content">
+            2
+        </div>
+    </div>
 
     <!-- Libraries -->
     <script type="text/javascript" src="/public/script.lib.min.js"></script>
