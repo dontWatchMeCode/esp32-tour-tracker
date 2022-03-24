@@ -3,4 +3,4 @@
 Coming Soon!
 
 Docs currently on
-[Notion](https://painzone.notion.site/Text-bc3a5cf25fa74edf92d0c843cf06fc5a)
+[Notion](https://painzone.notion.site/esp32-tour-tracker-e9ac41128b4043acabd3ca4c899c62fa)
