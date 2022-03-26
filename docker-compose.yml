@@ -32,5 +32,3 @@ services:
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: ${DATABASE_PASS}
-    ports:
-      - 127.0.0.1:3306:3306
