@@ -13,7 +13,7 @@ if [ $LOCAL = $REMOTE ]; then
     echo "Up-to-date"
 elif [ $LOCAL = $BASE ]; then
     echo "Need to pull"
-    docker-compose up --build -d --no-cache
+    docker-compose up --build -d
 elif [ $REMOTE = $BASE ]; then
     echo "Need to push"
 else

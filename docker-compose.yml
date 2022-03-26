@@ -16,14 +16,16 @@ services:
       WAIT_HOSTS: db:3306
     depends_on:
       - db
-    command: sh -c "/wait && npx prisma generate && npx prisma migrate deploy && npm start"
+    command: sh -c "/wait && npx prisma generate && npx prisma db push && npm start"
     restart: unless-stopped
     volumes:
       - .:/usr/app/
     links:
       - "db:database"
     ports:
-      - 127.0.0.1:3050:3050
+      - "127.0.0.1:${PORT}:${PORT}"
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
 
   db:
     image: mysql
