@@ -9,6 +9,13 @@ LOCAL=$(git rev-parse @)
 REMOTE=$(git rev-parse "$UPSTREAM")
 BASE=$(git merge-base @ "$UPSTREAM")
 
+COUNT=$(docker-compose ps | wc -l)
+
+if [ $COUNT -lt 3 ]; then
+    echo "No Container"
+    docker-compose up --build -d
+fi
+
 if [ $LOCAL = $REMOTE ]; then
     echo "Up-to-date"
 elif [ $LOCAL = $BASE ]; then
