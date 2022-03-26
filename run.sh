@@ -13,6 +13,7 @@ if [ $LOCAL = $REMOTE ]; then
     echo "Up-to-date"
 elif [ $LOCAL = $BASE ]; then
     echo "Need to pull"
+    git pull
     docker-compose up --build -d
 elif [ $REMOTE = $BASE ]; then
     echo "Need to push"
