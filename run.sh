@@ -15,7 +15,6 @@ if [[ $@ = *"-h"* ]]; then
     exit
 fi
 
-UPSTREAM=${1:-'@{u}'}
 BRANCH="main" # invalid branch will trow error
 
 LOCAL=$(git rev-parse @)
