@@ -11,7 +11,7 @@
 if [[ $@ = *"-h"* ]]; then
     echo "-f for force update"
     echo "-d adds port mapping for mysql"
-    echo "-s stops node container after creation"
+    echo "-s stops node container"
     exit
 fi
 
