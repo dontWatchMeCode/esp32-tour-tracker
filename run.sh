@@ -8,6 +8,13 @@
 # -d adds port mapping for mysql
 # -s stops node container after creation
 
+if [[ $@ = *"-h"* ]]; then
+    echo "-f for force update"
+    echo "-d adds port mapping for mysql"
+    echo "-s stops node container after creation"
+    exit
+fi
+
 UPSTREAM=${1:-'@{u}'}
 BRANCH="main" # invalid branch will trow error
 
