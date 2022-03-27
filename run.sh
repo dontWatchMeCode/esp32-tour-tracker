@@ -6,6 +6,7 @@
 
 # -f for force update
 # -d adds port mapping for mysql
+# -s stops node container after creation
 
 UPSTREAM=${1:-'@{u}'}
 BRANCH="main" # invalid branch will trow error
@@ -59,4 +60,8 @@ fi
 
 if [[ $@ = *"-d"* ]]; then
     git checkout docker-compose.yml >/dev/null 2>&1
+fi
+
+if [[ $@ = *"-s"* ]]; then
+    docker-compose stop node
 fi
