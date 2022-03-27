@@ -11,7 +11,7 @@ BASE=$(git merge-base @ "$UPSTREAM")
 
 COUNT=$(docker-compose ps | wc -l)
 
-if [ $COUNT -lt 3 ]; then
+if [ $COUNT -lt 4 ]; then
     echo "No Container"
     docker-compose up --build -d
 fi
