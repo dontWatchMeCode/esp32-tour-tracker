@@ -15,6 +15,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
+api.use(logger('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 
@@ -24,7 +25,7 @@ const config = {
 };
 
 const port = process.env.PORT || 3000;
-const port_api = (process.env.PORT+1) || 3001;
+const port_api = process.env.PORTAPI || 3001;
 if (!config.baseURL && !process.env.BASE_URL && process.env.PORT && process.env.NODE_ENV !== 'production') {
     config.baseURL = `http://localhost:${port}`;
 }

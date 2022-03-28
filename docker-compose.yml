@@ -24,6 +24,7 @@ services:
       - "db:database"
     ports:
       - "127.0.0.1:${PORT}:${PORT}"
+      - "127.0.0.1:${PORTAPI}:${PORTAPI}"
     stdin_open: true # docker run -i
     tty: true        # docker run -t
 

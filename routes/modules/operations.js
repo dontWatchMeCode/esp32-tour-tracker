@@ -188,6 +188,13 @@ async function file_get_info(arg, file) {
     return output;
 }
 
+async function check_api_key(key) {
+    const db_user = await prisma.api_keys.findUnique({
+        where: { key: key }
+    });
+    return db_user.userId;
+}
+
 module.exports = {
     check_user,
     get_userid,
@@ -199,5 +206,6 @@ module.exports = {
     file_rename,
     file_change_notes,
     file_delete,
-    file_get_info
+    file_get_info,
+    check_api_key
 };

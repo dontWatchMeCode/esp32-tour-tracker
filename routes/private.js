@@ -83,11 +83,7 @@ router.post('/api/upload', async (req, res) => {
         return res.status(400).send('No files were uploaded.');
     }
 
-    // The name of the input field (i.e. "file") is used to retrieve the uploaded file
     file = req.files.file;
-    const api_key = req.body.key;
-
-    console.log(api_key);
 
     upload_path = __dirname + '/../uploads/' + userid + "/" + file.name + "-" + Date.now();
 
