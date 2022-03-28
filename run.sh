@@ -15,11 +15,7 @@ if [[ $@ = *"-h"* ]]; then
     exit
 fi
 
-BRANCH="main" # invalid branch will trow error
-
-LOCAL=$(git rev-parse @)
-REMOTE=$(git rev-parse "${BRANCH}")
-BASE=$(git merge-base @ "${BRANCH}")
+GITUPLL=$(git pull)
 
 COUNT=$(docker-compose ps | wc -l)
 
@@ -41,33 +37,26 @@ if [ $# -gt 0 ]; then
     fi
 fi
 
-if [ $COUNT -lt 4 ]; then
-    echo "No Container"
-    echo "------------"
+if [ "$COUNT" -lt 4 ]; then
+    echo "Container missing"
+    echo "-----------------"
     docker-compose up --build -d
     exit
 fi
 
-if [ $LOCAL = $REMOTE ]; then
+if [ "$GITUPLL" = "Already up to date." ]; then
     echo "Up-to-date"
     echo "----------"
-elif [ $LOCAL = $BASE ]; then
-    echo "Need to pull"
-    echo "------------"
-    git pull
-    docker-compose up --build -d
-elif [ $REMOTE = $BASE ]; then
-    echo "Need to push"
-    echo "------------"
 else
-    echo "Diverged"
-    echo "--------"
+    echo "Need to Update"
+    echo "--------------"
+    docker-compose up --build -d
 fi
 
-if [[ $@ = *"-d"* ]]; then
+if [[ "$@" = *"-d"* ]]; then
     git checkout docker-compose.yml >/dev/null 2>&1
 fi
 
-if [[ $@ = *"-s"* ]]; then
+if [[ "$@" = *"-s"* ]]; then
     docker-compose stop node
 fi
