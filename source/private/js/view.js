@@ -77,6 +77,7 @@ function initMap() {
     const spChart = new Chart(ctx1, {
         type: 'line',
         responsive: true,
+        maintainAspectRatio: false,
         data: {
             labels: [],
             datasets: [{
@@ -92,8 +93,6 @@ function initMap() {
         options: {
             scales: {
                 y: {
-                    beginAtZero: true,
-                    suggestedMax: 50
                 }
             },
             elements: {
@@ -108,6 +107,7 @@ function initMap() {
     const tmpChart = new Chart(ctx2, {
         type: 'line',
         responsive: true,
+        maintainAspectRatio: false,
         data: {
             labels: [],
             datasets: [{
@@ -123,7 +123,6 @@ function initMap() {
         options: {
             scales: {
                 y: {
-                    beginAtZero: true
                 }
             },
             elements: {
@@ -138,6 +137,7 @@ function initMap() {
     const heiChart = new Chart(ctx3, {
         type: 'line',
         responsive: true,
+        maintainAspectRatio: false,
         data: {
             labels: [],
             datasets: [{
@@ -153,7 +153,6 @@ function initMap() {
         options: {
             scales: {
                 y: {
-                    beginAtZero: true
                 }
             },
             elements: {

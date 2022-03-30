@@ -3,12 +3,15 @@
 }
 
 .map-container {
-  width: 70%;
+  width: 100%;
   float: left;
   height: 100vh;
+  /* @media only screen and (max-width: 992px) {
+    width: 100%;
+  } */
 }
 
-.chart-container {
+/* .chart-container {
   position: relative;
   width: 30%;
   float: left;
@@ -17,7 +20,12 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-}
+} */
+
+/* .info-container canvas {
+  width: 90vw !important;
+  height: 200px !important;
+} */
 
 #lb-buttons {
   position: absolute;
@@ -25,10 +33,10 @@
   left: 15px;
 }
 
-.lb-close{
-    position: absolute;
-    top: 15px;
-    left: 15px;
+.lb-close {
+  position: absolute;
+  top: 15px;
+  left: 15px;
 }
 
 .lb-container {

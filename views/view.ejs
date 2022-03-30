@@ -10,6 +10,8 @@
     <!-- Custom -->
     <link href="/public/style.min.css" rel="stylesheet" />
 
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+
     <script>
         let data_array = <%- JSON.stringify(data) %>;
     </script>
@@ -29,11 +31,8 @@
 
     <div class="map-container" id="map"></div>
 
-    <div class="chart-container mx-auto">
+    <div class="chart-container mx-auto d-none d-lg-flex">
 
-        <canvas id="spChart"></canvas>
-        <canvas id="tmpChart"></canvas>
-        <canvas id="heiChart"></canvas>
     </div>
 
     <div id="lb-buttons" class="d-flex flex-column">
@@ -93,8 +92,12 @@
         <button type="button" class="lb-close btn btn-dark btn-floating">
             <i class="fas fa-times"></i>
         </button>
-        <div class="lb-content">
-            2
+        <div class="lb-content info-container">
+            <div style="width:70vw; height:100vh; margin: 0 auto; overflow: scroll;">
+                    <canvas id="spChart"></canvas>
+                    <canvas id="tmpChart"></canvas>
+                    <canvas id="heiChart"></canvas>
+            </div>
         </div>
     </div>
 
