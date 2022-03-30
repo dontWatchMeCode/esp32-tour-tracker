@@ -20,6 +20,11 @@ TODO: mobile view
 */
 
 function initMap() {
+
+    const color_x = "#2f4b7c";
+    const color_y = "#d45087";
+    const color_z = "#ff7c43";
+
     const f = chroma.scale(['blue', 'yellow', 'red']);
 
     const map = new google.maps.Map(document.getElementById("map"), {
@@ -257,7 +262,7 @@ function initMap() {
                 data: [],
                 borderWidth: 1,
                 borderColor: [
-                    '#003f5c'
+                    color_x
                 ],
                 pointStyle: 'line'
             }],
@@ -288,7 +293,7 @@ function initMap() {
                 data: [],
                 borderWidth: 1,
                 borderColor: [
-                    '#58508d'
+                    color_y
                 ],
                 pointStyle: 'line'
             }],
@@ -319,7 +324,7 @@ function initMap() {
                 data: [],
                 borderWidth: 1,
                 borderColor: [
-                    '#bc5090'
+                    color_z
                 ],
                 pointStyle: 'line'
             }],
@@ -350,7 +355,7 @@ function initMap() {
                 data: [],
                 borderWidth: 1,
                 borderColor: [
-                    '#003f5c'
+                    color_x
                 ],
                 pointStyle: 'line'
             }],
@@ -381,7 +386,7 @@ function initMap() {
                 data: [],
                 borderWidth: 1,
                 borderColor: [
-                    '#58508d'
+                    color_y
                 ],
                 pointStyle: 'line'
             }],
@@ -412,7 +417,7 @@ function initMap() {
                 data: [],
                 borderWidth: 1,
                 borderColor: [
-                    '#bc5090'
+                    color_z
                 ],
                 pointStyle: 'line'
             }],
