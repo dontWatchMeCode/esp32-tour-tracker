@@ -213,7 +213,229 @@ function initMap() {
         }
     });
 
+    /* --- */
+
+    const setChart = new Chart(document.getElementById('setChart').getContext('2d'), {
+        type: 'line',
+        responsive: true,
+        maintainAspectRatio: false,
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Geschwindigkeit',
+                data: [],
+                borderWidth: 1,
+                borderColor: [
+                    '#f95d6a'
+                ],
+                pointStyle: 'line'
+            },],
+        },
+        options: {
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            elements: {
+                point: {
+                    radius: 0
+                }
+            }
+        }
+    });
+
+    const rxChart = new Chart(document.getElementById('rxChart').getContext('2d'), {
+        type: 'line',
+        responsive: true,
+        maintainAspectRatio: false,
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Rotation X',
+                data: [],
+                borderWidth: 1,
+                borderColor: [
+                    '#003f5c'
+                ],
+                pointStyle: 'line'
+            }],
+        },
+        options: {
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            elements: {
+                point: {
+                    radius: 0
+                }
+            }
+        }
+    });
+
+    const ryChart = new Chart(document.getElementById('ryChart').getContext('2d'), {
+        type: 'line',
+        responsive: true,
+        maintainAspectRatio: false,
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Rotation Y',
+                data: [],
+                borderWidth: 1,
+                borderColor: [
+                    '#58508d'
+                ],
+                pointStyle: 'line'
+            }],
+        },
+        options: {
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            elements: {
+                point: {
+                    radius: 0
+                }
+            }
+        }
+    });
+
+    const rzChart = new Chart(document.getElementById('rzChart').getContext('2d'), {
+        type: 'line',
+        responsive: true,
+        maintainAspectRatio: false,
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Rotation Z',
+                data: [],
+                borderWidth: 1,
+                borderColor: [
+                    '#bc5090'
+                ],
+                pointStyle: 'line'
+            }],
+        },
+        options: {
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                }
+            },
+            elements: {
+                point: {
+                    radius: 0
+                }
+            }
+        }
+    });
+
+    const fxChart = new Chart(document.getElementById('fxChart').getContext('2d'), {
+        type: 'line',
+        responsive: true,
+        maintainAspectRatio: false,
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Achse X',
+                data: [],
+                borderWidth: 1,
+                borderColor: [
+                    '#003f5c'
+                ],
+                pointStyle: 'line'
+            }],
+        },
+        options: {
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            elements: {
+                point: {
+                    radius: 0
+                }
+            }
+        }
+    });
+
+    const fyChart = new Chart(document.getElementById('fyChart').getContext('2d'), {
+        type: 'line',
+        responsive: true,
+        maintainAspectRatio: false,
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Achse Y',
+                data: [],
+                borderWidth: 1,
+                borderColor: [
+                    '#58508d'
+                ],
+                pointStyle: 'line'
+            }],
+        },
+        options: {
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            elements: {
+                point: {
+                    radius: 0
+                }
+            }
+        }
+    });
+
+    const fzChart = new Chart(document.getElementById('fzChart').getContext('2d'), {
+        type: 'line',
+        responsive: true,
+        maintainAspectRatio: false,
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Achse Z',
+                data: [],
+                borderWidth: 1,
+                borderColor: [
+                    '#bc5090'
+                ],
+                pointStyle: 'line'
+            }],
+        },
+        options: {
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                }
+            },
+            elements: {
+                point: {
+                    radius: 0
+                }
+            }
+        }
+    });
+
     for (let i = 1; i < data_array.length - 2; i++) {
+        setChart.data.labels[i] = data_array[i][7].substring(0, 5);
+        setChart.data.datasets[0].data[i] = data_array[i][11];
+
         infoChart.data.labels[i] = data_array[i][7].substring(0, 5);
         infoChart.data.datasets[0].data[i] = data_array[i][11];
         infoChart.data.datasets[1].data[i] = data_array[i][6];
@@ -229,9 +451,91 @@ function initMap() {
         rotChart.data.datasets[1].data[i] = data_array[i][4];
         rotChart.data.datasets[2].data[i] = data_array[i][5];
     }
+    setChart.update();
+
     infoChart.update();
     accChart.update();
     rotChart.update();
+
+    function set(min, max) {
+
+        let temp;
+
+        if (min > max) {
+            temp = min;
+            min = max;
+            max = temp;
+        }
+
+        rxChart.options.scales.x.min = min;
+        rxChart.options.scales.x.max = max;
+
+        ryChart.options.scales.x.min = min;
+        ryChart.options.scales.x.max = max;
+
+        rzChart.options.scales.x.min = min;
+        rzChart.options.scales.x.max = max;
+
+        fxChart.options.scales.x.min = min;
+        fxChart.options.scales.x.max = max;
+
+        fyChart.options.scales.x.min = min;
+        fyChart.options.scales.x.max = max;
+
+        fzChart.options.scales.x.min = min;
+        fzChart.options.scales.x.max = max;
+
+        /* rxChart.data.labels.pop(); */
+        /* rxChart.data.datasets[0].data.pop(); */
+        for (let i = 1; i < data_array.length - 2; i++) {
+            rxChart.data.datasets[0].data.pop();
+            rxChart.data.labels.pop();
+
+            ryChart.data.datasets[0].data.pop();
+            ryChart.data.labels.pop();
+
+            rzChart.data.datasets[0].data.pop();
+            rzChart.data.labels.pop();
+
+            fxChart.data.datasets[0].data.pop();
+            fxChart.data.labels.pop();
+
+            fyChart.data.datasets[0].data.pop();
+            fyChart.data.labels.pop();
+
+            fzChart.data.datasets[0].data.pop();
+            fzChart.data.labels.pop();
+        }
+
+        /* rxChart.options.scale.y.tricks.stepSize = 20; */
+        for (let i = min; i < max; i++) {
+            rxChart.data.labels[i] = data_array[i][7].substring(0, 5);
+            rxChart.data.datasets[0].data[i] = data_array[i][3];
+
+            ryChart.data.labels[i] = data_array[i][7].substring(0, 5);
+            ryChart.data.datasets[0].data[i] = data_array[i][4];
+
+            rzChart.data.labels[i] = data_array[i][7].substring(0, 5);
+            rzChart.data.datasets[0].data[i] = data_array[i][5];
+
+
+            fxChart.data.labels[i] = data_array[i][7].substring(0, 5);
+            fxChart.data.datasets[0].data[i] = data_array[i][0];
+
+            fyChart.data.labels[i] = data_array[i][7].substring(0, 5);
+            fyChart.data.datasets[0].data[i] = data_array[i][1];
+
+            fzChart.data.labels[i] = data_array[i][7].substring(0, 5);
+            fzChart.data.datasets[0].data[i] = data_array[i][2];
+        }
+        rxChart.update('none');
+        ryChart.update('none');
+        rzChart.update('none');
+
+        fxChart.update('none');
+        fyChart.update('none');
+        fzChart.update('none');
+    }
 
     /* document.getElementById("lb-open").addEventListener('click', () => {
         var e = document.getElementById("lb-container");
@@ -271,5 +575,66 @@ function initMap() {
                 item.style.opacity = '0';
             });
         }
+    });
+
+    var canvas = document.getElementById('setChart');
+    var overlay = document.getElementById('overlay');
+    var chart = setChart;
+    console.log(overlay);
+    var startIndex = 0;
+    overlay.width = canvas.width;
+    overlay.height = canvas.height;
+    var selectionContext = overlay.getContext('2d');
+    var selectionRect = {
+        w: 0,
+        startX: 0,
+        startY: 0
+    };
+    var drag = false;
+    console.log(canvas);
+    canvas.addEventListener('pointerdown', evt => {
+        const points = chart.getElementsAtEventForMode(evt, 'index', {
+            intersect: false
+        });
+        console.log(points[0].index);
+        //(evt, 'nearest', { intersect: true }, true)
+        startIndex = points[0].index;
+        const rect = canvas.getBoundingClientRect();
+        selectionRect.startX = evt.clientX - rect.left;
+        selectionRect.startY = chart.chartArea.top;
+        drag = true;
+        // save points[0]._index for filtering
+    });
+    canvas.addEventListener('pointermove', evt => {
+
+        const rect = canvas.getBoundingClientRect();
+        if (drag) {
+            const rect = canvas.getBoundingClientRect();
+            selectionRect.w = (evt.clientX - rect.left) - selectionRect.startX;
+            selectionContext.globalAlpha = 0.5;
+            selectionContext.clearRect(0, 0, canvas.width, canvas.height);
+            selectionContext.fillRect(selectionRect.startX,
+                selectionRect.startY,
+                selectionRect.w,
+                chart.chartArea.bottom - chart.chartArea.top);
+        } else {
+            selectionContext.clearRect(0, 0, canvas.width, canvas.height);
+            var x = evt.clientX - rect.left;
+            if (x > chart.chartArea.left) {
+                selectionContext.fillRect(x,
+                    chart.chartArea.top,
+                    1,
+                    chart.chartArea.bottom - chart.chartArea.top);
+            }
+        }
+    });
+    canvas.addEventListener('pointerup', evt => {
+        const points = chart.getElementsAtEventForMode(evt, 'index', {
+            intersect: false
+        });
+        drag = false;
+        console.log('implement filter between ' + setChart.data.labels[startIndex] + ' and ' + setChart.data.labels[points[0].index]);
+        set(startIndex, points[0].index);
+        /* https://github.com/chartjs/chartjs-plugin-annotation */
     });
 }

@@ -30,6 +30,7 @@
     <div class="map-container" id="map"></div>
 
     <div class="chart-container mx-auto">
+
         <canvas id="infoChart"></canvas>
         <canvas id="accChart"></canvas>
         <canvas id="rotChart"></canvas>
@@ -53,8 +54,39 @@
             <i class="fas fa-times"></i>
         </button>
         <div class="lb-content">
-            1
+
+            <div style="width:80vw; height:100vh; margin: 0 auto; overflow: scroll;">
+                <div>
+                    <canvas id="overlay" style="position:absolute;pointer-events:none;"></canvas>
+                    <canvas id="setChart"></canvas>
+                </div>
+
+                <div style=" position:absolute; top: 200px; width: 37vw; left: 10vw;">
+                    <canvas id="rxChart"></canvas>
+                </div>
+                <div style="position:absolute; top: 400px; width: 37vw; left: 10vw;">
+                    <canvas id="ryChart"></canvas>
+                </div>
+                <div style="position:absolute; top: 600px; width: 37vw; left: 10vw;">
+                    <canvas id="rzChart"></canvas>
+                </div>
+
+
+                <div style="position:absolute; top: 200px; width: 37vw; right: 10vw;">
+                    <canvas id="fxChart"></canvas>
+                </div>
+                <div style="position:absolute; top: 400px; width: 37vw; right: 10vw;">
+                    <canvas id="fyChart"></canvas>
+                </div>
+                <div style="position:absolute; top: 600px; width: 37vw; right: 10vw;">
+                    <canvas id="fzChart"></canvas>
+                </div>
+
+            </div>
+
+
         </div>
+    </div>
     </div>
 
     <div class="lb-container">
@@ -71,9 +103,7 @@
     <!-- Custom -->
     <script type="text/javascript" src="/public/script.min.js"></script>
     <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
-    <script
-        src="https://maps.googleapis.com/maps/api/js?key=<%- gapi %>&callback=initMap&v=weekly"
-        async></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=<%- gapi %>&callback=initMap&v=weekly" async></script>
 </body>
 
 </html>
