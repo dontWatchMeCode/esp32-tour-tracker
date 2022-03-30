@@ -73,39 +73,21 @@ function initMap() {
             title: 'kmh: ' + data_array[i][11] + '; alt: ' + data_array[i][10]
         })
     } */
-    const ctx1 = document.getElementById('infoChart').getContext('2d');
-    const infoChart = new Chart(ctx1, {
+    const ctx1 = document.getElementById('spChart').getContext('2d');
+    const spChart = new Chart(ctx1, {
         type: 'line',
         responsive: true,
         data: {
             labels: [],
             datasets: [{
-                label: 'km/h',
+                label: 'Geschwindigkeit',
                 data: [],
                 borderWidth: 1,
                 borderColor: [
-                    '#58508d'
+                    '#d45087'
                 ],
                 pointStyle: 'line',
-            },
-            {
-                label: 'C',
-                data: [],
-                borderWidth: 1,
-                borderColor: [
-                    '#ff6361'
-                ],
-                pointStyle: 'line'
-            },
-            {
-                label: 'H',
-                data: [],
-                borderWidth: 1,
-                borderColor: [
-                    '#ffa600'
-                ],
-                pointStyle: 'line'
-            }],
+            },],
         },
         options: {
             scales: {
@@ -122,36 +104,18 @@ function initMap() {
         }
     });
 
-    const ctx2 = document.getElementById('accChart').getContext('2d');
-    const accChart = new Chart(ctx2, {
+    const ctx2 = document.getElementById('tmpChart').getContext('2d');
+    const tmpChart = new Chart(ctx2, {
         type: 'line',
         responsive: true,
         data: {
             labels: [],
             datasets: [{
-                label: 'x',
+                label: 'Temperature',
                 data: [],
                 borderWidth: 1,
                 borderColor: [
-                    '#003f5c'
-                ],
-                pointStyle: 'line'
-            },
-            {
-                label: 'y',
-                data: [],
-                borderWidth: 1,
-                borderColor: [
-                    '#58508d'
-                ],
-                pointStyle: 'line'
-            },
-            {
-                label: 'z',
-                data: [],
-                borderWidth: 1,
-                borderColor: [
-                    '#bc5090'
+                    '#ffa600'
                 ],
                 pointStyle: 'line'
             }],
@@ -170,36 +134,18 @@ function initMap() {
         }
     });
 
-    const ctx3 = document.getElementById('rotChart').getContext('2d');
-    const rotChart = new Chart(ctx3, {
+    const ctx3 = document.getElementById('heiChart').getContext('2d');
+    const heiChart = new Chart(ctx3, {
         type: 'line',
         responsive: true,
         data: {
             labels: [],
             datasets: [{
-                label: 'x',
+                label: 'Höhenmeter',
                 data: [],
                 borderWidth: 1,
                 borderColor: [
                     '#003f5c'
-                ],
-                pointStyle: 'line'
-            },
-            {
-                label: 'y',
-                data: [],
-                borderWidth: 1,
-                borderColor: [
-                    '#58508d'
-                ],
-                pointStyle: 'line'
-            },
-            {
-                label: 'z',
-                data: [],
-                borderWidth: 1,
-                borderColor: [
-                    '#bc5090'
                 ],
                 pointStyle: 'line'
             }],
@@ -441,26 +387,20 @@ function initMap() {
         setChart.data.labels[i] = data_array[i][7].substring(0, 5);
         setChart.data.datasets[0].data[i] = data_array[i][11];
 
-        infoChart.data.labels[i] = data_array[i][7].substring(0, 5);
-        infoChart.data.datasets[0].data[i] = data_array[i][11];
-        infoChart.data.datasets[1].data[i] = data_array[i][6];
-        infoChart.data.datasets[2].data[i] = data_array[i][10];
+        spChart.data.labels[i] = data_array[i][7].substring(0, 5);
+        spChart.data.datasets[0].data[i] = data_array[i][11];
 
-        accChart.data.labels[i] = data_array[i][7].substring(0, 5);
-        accChart.data.datasets[0].data[i] = data_array[i][0];
-        accChart.data.datasets[1].data[i] = data_array[i][1];
-        accChart.data.datasets[2].data[i] = data_array[i][2];
+        tmpChart.data.labels[i] = data_array[i][7].substring(0, 5);
+        tmpChart.data.datasets[0].data[i] = data_array[i][6];
 
-        rotChart.data.labels[i] = data_array[i][7].substring(0, 5);
-        rotChart.data.datasets[0].data[i] = data_array[i][3];
-        rotChart.data.datasets[1].data[i] = data_array[i][4];
-        rotChart.data.datasets[2].data[i] = data_array[i][5];
+        heiChart.data.labels[i] = data_array[i][7].substring(0, 5);
+        heiChart.data.datasets[0].data[i] = data_array[i][10];
     }
     setChart.update();
 
-    infoChart.update();
-    accChart.update();
-    rotChart.update();
+    spChart.update();
+    tmpChart.update();
+    heiChart.update();
 
     function set(min, max) {
 
@@ -541,18 +481,6 @@ function initMap() {
         fyChart.update('none');
         fzChart.update('none');
     }
-
-    /* document.getElementById("lb-open").addEventListener('click', () => {
-        var e = document.getElementById("lb-container");
-        if (e.style.visibility == 'visible') {
-            e.style.visibility = 'hidden';
-            e.style.opacity = '0';
-        }
-        else {
-            e.style.visibility = 'visible';
-            e.style.opacity = '1';
-        }
-    }); */
 
     document.querySelectorAll('.lb-open').forEach((open, index) => {
         const container = document.querySelectorAll('.lb-container')[index];
