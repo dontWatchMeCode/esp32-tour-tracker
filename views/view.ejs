@@ -54,7 +54,7 @@
         </button>
         <div class="lb-content">
 
-            <div style="width:80vw; height:100vh; margin: 0 auto; overflow: scroll;">
+            <div style="width:80vw; margin: 0 auto; ">
                 <div>
                     <canvas id="overlay" style="position:absolute;pointer-events:none;"></canvas>
                     <canvas id="setChart"></canvas>
@@ -92,11 +92,15 @@
         <button type="button" class="lb-close btn btn-dark btn-floating">
             <i class="fas fa-times"></i>
         </button>
-        <div class="lb-content info-container">
-            <div style="width:70vw; height:100vh; margin: 0 auto; overflow: scroll;">
-                    <canvas id="spChart"></canvas>
-                    <canvas id="tmpChart"></canvas>
-                    <canvas id="heiChart"></canvas>
+        <div class="lb-content info-container" style="width:80vw; margin: 0 auto;">
+            <div style="width:100%; margin: 0 auto; overflow: hidden;">
+                <canvas id="spChart"></canvas>
+            </div>
+            <div style="width:100%; margin: 0 auto; overflow: hidden;">
+                <canvas id="tmpChart"></canvas>
+            </div>
+            <div style="width:100%; margin: 0 auto; overflow: hidden;">
+                <canvas id="heiChart"></canvas>
             </div>
         </div>
     </div>
