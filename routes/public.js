@@ -11,6 +11,11 @@ router.use(bodyParser.text());
 /* public routes for pages and public api */
 
 router.post('/', async (req, res) => {
+
+    let date_ob = new Date();
+    let date = ("0" + date_ob.getDate()).slice(-2);
+    let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+
     const apikey = req.headers.apikey;
 
     let userid;
@@ -28,7 +33,7 @@ router.post('/', async (req, res) => {
         return;
     }
 
-    upload_path = __dirname + '/../uploads/' + userid + "/" + "file-" + Date.now();
+    upload_path = __dirname + '/../uploads/' + userid + "/" + "file-" + date + "-" + month + "_" + Date.now();
 
     var write_file = fs.createWriteStream(upload_path, {
         flags: 'a' // 'a' means appending (old data will be preserved)
