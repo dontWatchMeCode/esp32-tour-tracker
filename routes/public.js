@@ -35,10 +35,16 @@ router.post('/', async (req, res) => {
 
     upload_path = __dirname + '/../uploads/' + userid + "/" + "file-" + date + "-" + month + "_" + Date.now();
 
-    var write_file = fs.createWriteStream(upload_path, {
-        flags: 'a' // 'a' means appending (old data will be preserved)
-    });
-    write_file.write(req.body);
+    try {
+        var write_file = fs.createWriteStream(upload_path, {
+            flags: 'a' // 'a' means appending (old data will be preserved)
+        });
+        write_file.write(req.body);
+    } catch (error) {
+        res.status(403);
+        res.send("file error");
+        return;
+    }
 
     res.status(200).send('File uploaded!');
 });
