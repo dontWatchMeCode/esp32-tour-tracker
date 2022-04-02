@@ -22,13 +22,13 @@ router.post('/', async (req, res) => {
     try {
         userid = await db.check_api_key(apikey);
     } catch (error) {
-        res.status(400);
+        res.status(401);
         res.send("api key doasnt exist");
         return;
     }
 
     if (!req.body || Object.keys(req.body).length === 0) {
-        res.status(400);
+        res.status(402);
         res.send("no file given");
         return;
     }
