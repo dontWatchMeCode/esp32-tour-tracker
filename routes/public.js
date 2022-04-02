@@ -1,21 +1,19 @@
 const router = require('express').Router();
 const fileUpload = require('express-fileupload');
 const db = require('./modules/operations');
+const fs = require('fs');
 
 router.use(fileUpload());
+
+const bodyParser = require('body-parser');
+router.use(bodyParser.text());
 
 /* public routes for pages and public api */
 
 router.post('/', async (req, res) => {
     const apikey = req.headers.apikey;
-    console.log(apikey);
-    console.log(req.files);
+
     let userid;
-
-    if (!req.files || Object.keys(req.files).length === 0) {
-        return res.status(400).send('No files were uploaded.');
-    }
-
     try {
         userid = await db.check_api_key(apikey);
     } catch (error) {
@@ -24,17 +22,20 @@ router.post('/', async (req, res) => {
         return;
     }
 
-    file = req.files.file;
+    if (!req.body || Object.keys(req.body).length === 0) {
+        res.status(400);
+        res.send("no file given");
+        return;
+    }
 
-    upload_path = __dirname + '/../uploads/' + userid + "/" + file.name + "-" + Date.now();
+    upload_path = __dirname + '/../uploads/' + userid + "/" + "file-" + Date.now();
 
-    // Use the mv() method to place the file somewhere on your server
-    file.mv(upload_path, function (err) {
-        if (err)
-            return res.status(500).send(err);
-
-        res.status(200).send('File uploaded!');
+    var write_file = fs.createWriteStream(upload_path, {
+        flags: 'a' // 'a' means appending (old data will be preserved)
     });
+    write_file.write(req.body);
+
+    res.status(200).send('File uploaded!');
 });
 
 module.exports = router;
