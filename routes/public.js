@@ -33,13 +33,12 @@ router.post('/', async (req, res) => {
         return;
     }
 
-    upload_path = __dirname + '/../uploads/' + userid + "/" + "file-" + date + "-" + month + "_" + Date.now();
-
     try {
+        upload_path = __dirname + '/../uploads/' + userid + "/" + "file-" + date + "-" + month + "_" + Date.now();
         var write_file = fs.createWriteStream(upload_path, {
             flags: 'a' // 'a' means appending (old data will be preserved)
         });
-        write_file.write(req.body);
+        write_file.write(req.body.replace(/\n\s+/g, '\n'));
     } catch (error) {
         res.status(403);
         res.send("file error");
