@@ -38,7 +38,7 @@ router.post('/', async (req, res) => {
         var write_file = fs.createWriteStream(upload_path, {
             flags: 'a' // 'a' means appending (old data will be preserved)
         });
-        write_file.write(req.body.replace(/\n\s+/g, '\n'));
+        write_file.write(req.body.replace(/\n\s+/g, '\n').replace(/^\s+|\s+$/g, ''));
     } catch (error) {
         res.status(403);
         res.send("file error");
