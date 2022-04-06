@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Map</title>
+    <link rel="shortcut icon" href="/public/favicon.png" />
+    <!-- Lib -->
+    <link href="/public/style.lib.min.css" rel="stylesheet" />
+    <!-- Custom -->
+    <link href="/public/style.min.css" rel="stylesheet" />
+
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+
+    <script>
+        let data_array = <%- JSON.stringify(data) %>;
+    </script>
+
+</head>
+
+<body>
+
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+
+    <div style="width:80%; margin: 0 auto;">
+        <canvas id="spChart"></canvas>
+    </div>
+    <div style="width:80%; margin: 0 auto;">
+        <canvas id="tmpChart"></canvas>
+    </div>
+    <div style="width:80%; margin: 0 auto;">
+        <canvas id="heiChart"></canvas>
+    </div>
+
+    <!-- Libraries -->
+    <script type="text/javascript" src="/public/script.lib.min.js"></script>
+    <!-- Custom -->
+    <script type="text/javascript" src="/public/script.min.js"></script>
+</body>
+
+</html>
