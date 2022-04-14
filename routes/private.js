@@ -79,6 +79,23 @@ router.get('/view/:id', requiresAuth(), async (req, res) => {
     });
 });
 
+router.get('/viewprint/:id', requiresAuth(), async (req, res) => {
+    const userid = await db.get_userid(req.oidc.user.sub);
+    let id = req.params.id;
+    // https://stackoverflow.com/a/53031629
+    let data = fs.readFileSync('./uploads/' + userid + "/" + id)
+        .toString() // convert Buffer to string
+        .split('\n') // split string to lines
+        .map(e => e.trim()) // remove white spaces for each line
+        .map(e => e.split(',').map(e => e.trim())); // split each line to array
+    res.render('viewprint', {
+        title: 'View',
+        isAuthenticated: req.oidc.isAuthenticated(),
+        id,
+        data
+    });
+});
+
 router.post('/api/upload', async (req, res) => {
     let file;
     let upload_path;
