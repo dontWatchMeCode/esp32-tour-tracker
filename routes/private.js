@@ -10,12 +10,6 @@ router.use(fileUpload());
 
 /* private routes only avalible when logged in */
 
-router.get('/test', requiresAuth(), async (req, res) => {
-    res.render('test', {
-        title: 'Home',
-    });
-});
-
 router.get('/', async (req, res) => {
     db.check_user(req.oidc.user.sub);
     res.render('index', {

@@ -101,12 +101,11 @@ function init_vp() {
         heiChart.data.datasets[0].data[i] = data_array[i][10];
     }
 
-    spChart.update();
-    tmpChart.update();
-    heiChart.update();
+    spChart.update('none');
+    tmpChart.update('none');
+    heiChart.update('none');
 
     window.print();
-    setTimeout(window.close, 0);
 }
 
 
