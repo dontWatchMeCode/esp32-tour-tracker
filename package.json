@@ -7,7 +7,7 @@
         "db": "npx prisma migrate dev"
     },
     "dependencies": {
-        "@prisma/client": "^3.8.1",
+        "@prisma/client": "^3.12.0",
         "body-parser": "^1.19.2",
         "csv-parser": "^3.0.0",
         "debug": "~2.6.9",
@@ -20,8 +20,7 @@
         "morgan": "~1.9.0",
         "mysql": "^2.18.1",
         "nodemon": "^2.0.15",
-        "path": "^0.12.7",
-        "prisma": "^3.8.1"
+        "path": "^0.12.7"
     },
     "devDependencies": {
         "eslint": "^8.10.0",
@@ -33,6 +32,7 @@
         "gulp-sass": "^5.1.0",
         "gulp-uglify": "^3.0.2",
         "jshint": "^2.13.4",
+        "prisma": "^3.12.0",
         "sass": "^1.49.9"
     }
 }
