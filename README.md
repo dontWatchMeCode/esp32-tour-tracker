@@ -42,6 +42,8 @@ I would either use  Svelte or React.
 - Components are mostly easier to work with than template literals
 - easier Reactive Content
 
+I would also switch out Gulp for either Webpack or Vite/Rollup.
+
 ## Closing Word
 
 Overall, I'm pretty happy how this project turned out, even tough the code is a bit rough around the edge.
